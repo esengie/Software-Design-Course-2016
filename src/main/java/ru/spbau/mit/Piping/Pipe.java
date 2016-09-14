@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Pipe {
 
-    class PipedCommand extends Command {
+    static class PipedCommand extends Command {
         private Command m_inCommand;
         private Command m_outCommand;
 
@@ -41,7 +41,7 @@ public class Pipe {
         }
     }
 
-    Command connect(Command a_in, Command a_out) throws IOException {
+    public static Command connect(Command a_in, Command a_out) throws IOException {
         PipedCommand pipe = new PipedCommand(new ArrayList<>());
         pipe.setInOutCommand(a_in, a_out);
 

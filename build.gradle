@@ -1,7 +1,7 @@
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'antlr'
+//apply plugin: 'antlr'
 
 sourceCompatibility = 1.8
 
@@ -11,5 +11,5 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    antlr "org.antlr:antlr4:4.5"
+//    antlr "org.antlr:antlr4:4.5"
 }
