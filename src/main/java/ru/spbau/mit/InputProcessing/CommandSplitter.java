@@ -3,6 +3,7 @@ package ru.spbau.mit.InputProcessing;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CommandSplitter {
     // Can't just split on '|' because it can be inside the brackets
@@ -24,6 +25,10 @@ public class CommandSplitter {
                 inDoubleQuotes = !inDoubleQuotes;
         }
         retVal.add(a_stringIn.substring(left));
+
+        for (int i = 0; i < retVal.size(); ++i){
+            retVal.set(i, retVal.get(i).trim());
+        }
 
         return retVal;
     }

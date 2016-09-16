@@ -12,7 +12,7 @@ public class CommandSplitterTest {
     @Test
     public void splitByPipe() throws Exception {
         String test = " cat \"asdas|dasd\" | pwd | cat";
-        List<String> expected = Arrays.asList(" cat \"asdas|dasd\" ", " pwd ", " cat");
+        List<String> expected = Arrays.asList("cat \"asdas|dasd\"", "pwd", "cat");
 
         assertThat(CommandSplitter.splitByPipe(test), is(expected));
     }

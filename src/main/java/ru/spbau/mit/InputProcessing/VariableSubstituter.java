@@ -24,7 +24,7 @@ public class VariableSubstituter {
 
         StringBuilder retVal = new StringBuilder();
         int left = 0;
-        Set<Character> specialCharacters = new TreeSet<>(Arrays.asList(' ', '"', '/'));
+        Set<Character> specialCharacters = new TreeSet<>(Arrays.asList(' ', '"', '/', '='));
 
         for (Integer right : dollarPositions) {
             retVal.append(a_stringIn.substring(left, right));

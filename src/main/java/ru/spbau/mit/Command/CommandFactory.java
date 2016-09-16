@@ -20,7 +20,7 @@ public class CommandFactory {
         COMMANDS.put("echo", EchoCommand.class);
     }
 
-    public Command createCommand(String a_commandName, List<Argument> a_commandArguments) throws CommandCreationException {
+    public static Command createCommand(String a_commandName, List<Argument> a_commandArguments) throws CommandCreationException {
         Class<? extends Command> commandClass = COMMANDS.getOrDefault(a_commandName, EXTERNAL_COMMAND_CLASS);
         try {
             Constructor<? extends Command> constructor = commandClass.getConstructor(List.class);

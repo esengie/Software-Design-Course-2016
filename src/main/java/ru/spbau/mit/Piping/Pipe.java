@@ -27,7 +27,6 @@ public class Pipe {
             m_outCommand = a_outCommand;
             setOutputStream(a_outCommand.getOutputStream());
 
-
             PipedOutputStream out = new PipedOutputStream();
             PipedInputStream in = new PipedInputStream(out);
 
