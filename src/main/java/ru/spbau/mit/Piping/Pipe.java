@@ -20,12 +20,12 @@ public class Pipe {
             super(a_args);
         }
 
-        void setInOutCommand(Command a_inCommand, Command a_outCommand) throws IOException {
-            m_inCommand = a_inCommand;
-            setInputStream(a_inCommand.getInputStream());
+        void setInOutCommand(Command a_left, Command a_right) throws IOException {
+            m_inCommand = a_left;
+            setInputStream(a_left.getInputStream());
 
-            m_outCommand = a_outCommand;
-            setOutputStream(a_outCommand.getOutputStream());
+            m_outCommand = a_right;
+            setOutputStream(a_right.getOutputStream());
 
             PipedOutputStream out = new PipedOutputStream();
             PipedInputStream in = new PipedInputStream(out);
@@ -34,8 +34,9 @@ public class Pipe {
             m_outCommand.setInputStream(in);
         }
 
-        public void run() {
+        public void run() throws IOException {
             m_inCommand.run();
+            m_inCommand.getOutputStream().close();
             m_outCommand.run();
         }
     }

@@ -24,8 +24,8 @@ public class CommandParserTest {
 
     @Test
     public void processInput() throws Exception {
-        String input = " pwd | l=asdf | echo \"$dol=23\" ";
-        List<String> expected = Arrays.asList("pwd", "echo \"bol=23\"");
+        String input = " pwd | l=asdf | echo \"$dol=23\" | $l";
+        List<String> expected = Arrays.asList("pwd", "echo \"bol=23\"", "asdf");
 
         List<String> test = CommandParser.processInput(input, env);
 

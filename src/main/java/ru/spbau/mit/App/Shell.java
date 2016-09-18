@@ -8,24 +8,40 @@ import ru.spbau.mit.ShellEnvironment.ShellEnvironment;
 import ru.spbau.mit.ShellEnvironment.ShellEnvironmentImpl;
 
 import java.io.*;
+import java.util.Objects;
 
 public class Shell {
-    private Shell() {
+    private static ShellEnvironment m_env = new ShellEnvironmentImpl();
+
+    static {
         m_env.addToEnvironment("HOME", "");
     }
-
-    private static ShellEnvironment m_env = new ShellEnvironmentImpl();
 
     public static ShellEnvironment getEnv() {
         return m_env;
     }
 
-    public static void run() throws IOException, VariableUndefinedException, CommandCreationException {
+    public static void run() {
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
-            final String userInput = consoleReader.readLine();
-            final Command command = CommandParser.parse(userInput, getEnv());
-            command.run();
+            try {
+                final String userInput = consoleReader.readLine();
+                if (Objects.equals(userInput, ""))
+                    continue;
+                if (userInput == null)
+                    break;
+                final Command command = CommandParser.parse(userInput, getEnv());
+                if (command == null)
+                    continue;
+                command.run();
+            }
+            catch (CommandCreationException | VariableUndefinedException | IOException e){
+                System.out.println(e.toString());
+            }
         }
+    }
+
+    public static void main(String [ ] args){
+        Shell.run();
     }
 }

@@ -1,17 +1,15 @@
 package ru.spbau.mit.Command;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
 
 public abstract class Command {
-    protected final List<Argument> m_args;
-    protected InputStream m_inStream;
-    protected OutputStream m_outStream;
+    final List<Argument> m_args;
+    private InputStream m_inStream = System.in;
+    private OutputStream m_outStream = System.out;
     // error stream?
 
-    protected Command(final List<Argument> a_args){
+    public Command(final List<Argument> a_args){
         m_args = a_args;
     }
 
@@ -31,7 +29,11 @@ public abstract class Command {
         return m_outStream;
     }
 
-    public void run() {
+    public void run() throws IOException {
         throw new UnsupportedOperationException("method not implemented");
+    }
+
+    void flush() throws IOException {
+        getOutputStream().flush();
     }
 }
