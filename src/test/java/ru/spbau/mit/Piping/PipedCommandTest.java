@@ -23,8 +23,8 @@ public class PipedCommandTest {
     public void setUpStreams() throws IOException {
         System.setOut(new PrintStream(outContent));
 
-        final File file1 = folder.newFile(files[0]);
-        final File file2 = folder.newFile(files[1]);
+        File file1 = folder.newFile(files[0]);
+        File file2 = folder.newFile(files[1]);
 
         System.setProperty("user.dir", folder.getRoot().getAbsolutePath());
 
@@ -54,8 +54,6 @@ public class PipedCommandTest {
 
     @Test
     public void runExternal() throws IOException {
-        System.setProperty("user.dir", folder.getRoot().getAbsolutePath());
-
         Command cat = CommandFactory.createCommand("cat", files);
         Command grep = CommandFactory.createCommand("grep", "Tom");
         Command find = Pipe.connect(cat, grep);

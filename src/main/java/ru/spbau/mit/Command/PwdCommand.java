@@ -1,5 +1,6 @@
 package ru.spbau.mit.Command;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,11 +17,12 @@ class PwdCommand extends Command {
     /**
      * Return where we are in the filesystem
      *
-     * @throws IOException
+     * @throws IOException io is hard
      */
     @Override
     public void run() throws IOException {
-        Path currentRelativePath = Paths.get("");
+        // Paths.get("") y u no work?
+        Path currentRelativePath = new File("").getAbsoluteFile().toPath();
         String s = currentRelativePath.toAbsolutePath().toString() + "\n";
         getOutputStream().write(s.getBytes());
 
