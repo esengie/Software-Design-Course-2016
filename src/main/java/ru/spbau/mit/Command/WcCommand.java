@@ -6,11 +6,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
-public class WcCommand extends Command {
+/**
+ * Wc - reads each file passed and counts lines, words and bytes
+ * in each files and the total
+ */
+class WcCommand extends Command {
     WcCommand(List<Argument> a_args) {
         super(a_args);
     }
 
+    /**
+     * Iterates through the args and counts the stats
+     *
+     * Prints the total if there are more than two files specified
+     *
+     * @throws IOException
+     */
     @Override
     public void run() throws IOException {
         long linesTotal = 0;

@@ -5,11 +5,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class PwdCommand extends Command {
+/**
+ * Pwd command
+ */
+class PwdCommand extends Command {
     PwdCommand(List<Argument> a_args) {
         super(a_args);
     }
 
+    /**
+     * Return where we are in the filesystem
+     *
+     * @throws IOException
+     */
     @Override
     public void run() throws IOException {
         Path currentRelativePath = Paths.get("");

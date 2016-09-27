@@ -5,9 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CommandSplitter {
-    // Can't just split on '|' because it can be inside the brackets
-    public static List<String> splitByPipe(String a_stringIn){
+/**
+ * Splits a line on |
+ */
+class CommandSplitter {
+    /**
+     * Splits a line on pipe symbols
+     * Can't just split on '|' because it can be inside the brackets
+     * @param a_stringIn input
+     * @return list of split strings
+     */
+    static List<String> splitByPipe(String a_stringIn){
         List<String> retVal = new ArrayList<>();
 
         boolean inSingleQuotes = false;

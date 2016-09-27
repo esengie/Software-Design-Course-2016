@@ -7,9 +7,20 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class VariableSubstituter {
+/**
+ * Substitutes all the vars in the environment into the line
+ */
+class VariableSubstituter {
 
-    public static String substituteVariables(String a_stringIn, ShellEnvironment a_env) throws VariableUndefinedException {
+    /**
+     * Substitutes rather orcishly but does it's job
+     *
+     * @param a_stringIn input string
+     * @param a_env shell env
+     * @return processed string
+     * @throws VariableUndefinedException if the var isn't in the env
+     */
+    static String substituteVariables(String a_stringIn, ShellEnvironment a_env) throws VariableUndefinedException {
 
         List<Integer> dollarPositions = new ArrayList<>();
         boolean inSingleQuotes = false;

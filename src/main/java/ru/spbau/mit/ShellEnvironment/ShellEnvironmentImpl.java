@@ -1,10 +1,13 @@
 package ru.spbau.mit.ShellEnvironment;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * A simple implementation of the ShellEnvironment interface using a HashMap
+ */
 public class ShellEnvironmentImpl implements ShellEnvironment {
-    private Map<String, String> m_env= new ConcurrentHashMap<>();
+    private Map<String, String> m_env= new HashMap<>();
 
     public boolean checkDefined(String a_varName){
         return m_env.containsKey(a_varName);

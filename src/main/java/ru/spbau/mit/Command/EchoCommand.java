@@ -3,7 +3,10 @@ package ru.spbau.mit.Command;
 import java.io.IOException;
 import java.util.List;
 
-public class EchoCommand extends Command {
+/**
+ * Echo - outputs its own args to outputstream
+ */
+class EchoCommand extends Command {
     EchoCommand(List<Argument> a_args) {
         super(a_args);
     }

@@ -4,12 +4,22 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ExternalCommand extends Command {
+/**
+ * External command - uses ProcessBuilder to create a process
+ *
+ */
+class ExternalCommand extends Command {
     ExternalCommand(List<Argument> args) {
         super(args);
-
     }
 
+    /**
+     *
+     * Reads all piped input to the  processand closes the
+     * inputstream of the process and continues till the work is done
+     *
+     * @throws IOException
+     */
     @Override
     public void run() throws IOException {
         ProcessBuilder pb = new ProcessBuilder(

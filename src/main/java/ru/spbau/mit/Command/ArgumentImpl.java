@@ -1,9 +1,12 @@
 package ru.spbau.mit.Command;
 
-public class ArgumentImpl implements Argument {
+/**
+ * Basic implementation of command argument interface
+ */
+class ArgumentImpl implements Argument {
     private String m_string;
 
-    public ArgumentImpl(String a_string){
+    ArgumentImpl(String a_string){
         m_string = a_string;
     }
 

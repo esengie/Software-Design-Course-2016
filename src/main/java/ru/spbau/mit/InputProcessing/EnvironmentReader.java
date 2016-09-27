@@ -4,9 +4,18 @@ import ru.spbau.mit.Util.Pair;
 
 import java.util.*;
 
-// Reads an environment variable from a string if it's there
-public class EnvironmentReader {
-    public static Optional<Pair<String, String>> getEnvironmentVariable(String a_stringIn){
+/**
+ * Reads an environment variable from a string if it's there
+ */
+class EnvironmentReader {
+
+    /**
+     * If the line input is in the form var=val returns the pair
+     * 
+     * @param a_stringIn input
+     * @return optional pair of variable and its value
+     */
+    static Optional<Pair<String, String>> getEnvironmentVariable(String a_stringIn){
         List<String> tempList = new ArrayList<>(Arrays.asList(a_stringIn.split("\\s+")));
         tempList.removeAll(Collections.singleton(""));
 

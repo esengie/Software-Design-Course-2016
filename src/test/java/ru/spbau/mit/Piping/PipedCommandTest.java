@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import ru.spbau.mit.Command.Command;
 import ru.spbau.mit.Command.CommandFactory;
-import ru.spbau.mit.Exceptions.CommandCreationException;
 
 import java.io.*;
 
@@ -54,7 +53,7 @@ public class PipedCommandTest {
     }
 
     @Test
-    public void runExternal() throws CommandCreationException, IOException {
+    public void runExternal() throws IOException {
         System.setProperty("user.dir", folder.getRoot().getAbsolutePath());
 
         Command cat = CommandFactory.createCommand("cat", files);

@@ -10,9 +10,13 @@ import java.io.PipedOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A pipe class - connects two commands together
+ */
 public class Pipe {
 
-    static class PipedCommand extends Command {
+
+    private static class PipedCommand extends Command {
         private Command m_inCommand;
         private Command m_outCommand;
 
@@ -41,6 +45,14 @@ public class Pipe {
         }
     }
 
+    /**
+     * Connects two commands via a pipe
+     *
+     * @param a_in left command
+     * @param a_out right command
+     * @return piped command
+     * @throws IOException working with stream it ma
+     */
     public static Command connect(Command a_in, Command a_out) throws IOException {
         PipedCommand pipe = new PipedCommand(new ArrayList<>());
         pipe.setInOutCommand(a_in, a_out);

@@ -1,6 +1,8 @@
 package ru.spbau.mit.Exceptions;
 
-public class VariableUndefinedException extends Exception {
+import java.io.IOException;
+
+public class VariableUndefinedException extends IOException {
     public VariableUndefinedException(String name) {
         super("Cannot find variable " + name);
     }

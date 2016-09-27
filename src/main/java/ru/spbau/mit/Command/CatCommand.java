@@ -7,7 +7,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class CatCommand extends Command {
+/**
+ * Cat command -- gets the input stream to output stream
+ * if no args are passed, otherwise copies files to outputstream
+ */
+class CatCommand extends Command {
     CatCommand(List<Argument> a_args) {
         super(a_args);
     }
