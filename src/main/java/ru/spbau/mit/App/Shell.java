@@ -1,5 +1,6 @@
 package ru.spbau.mit.App;
 
+import com.beust.jcommander.ParameterException;
 import ru.spbau.mit.Command.Command;
 import ru.spbau.mit.Exceptions.VariableUndefinedException;
 import ru.spbau.mit.InputProcessing.CommandParser;
@@ -44,6 +45,8 @@ public class Shell {
                 System.out.println(e.toString());
             } catch (IOException e) {
                 System.out.println(e);
+            } catch (ParameterException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
