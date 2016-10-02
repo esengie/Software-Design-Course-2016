@@ -14,6 +14,11 @@ import java.util.regex.Pattern;
 
 /**
  * Grep - gets a pattern and outputs finds from input
+ *
+ * -i - Case insensitive
+ * -w - Whole words search
+ * -A n - add lines after the one found
+ *
  */
 class GrepCommand extends Command {
     GrepCommand(List<String> args) {
@@ -36,7 +41,12 @@ class GrepCommand extends Command {
     private Pattern pattern;
 
     /**
-     * Outputs its own args to outputstream
+     * Parses input args, builds a pattern based on args.
+     * If no other inputs launches grep function what is piped into it,
+     * otherwise launches grep function for each file.
+     *
+     * grep function forms a map of matches which get printed out
+     * by print function
      *
      * @throws IOException could throw
      */
@@ -58,15 +68,32 @@ class GrepCommand extends Command {
             }
         }
 
-        // Output results, if passed files output filename also
+        print();
+    }
+
+    /**
+     * Output results, if passed files output filename also
+     *
+     * @throws IOException may throw
+     */
+    private void print() throws IOException {
         for (String fileName : matches.keySet()) {
             for (String line : matches.get(fileName)) {
                 getOutputStream().write((fileName + line + "\n").getBytes());
             }
         }
-
     }
 
+
+    /**
+     * While there are lines in the input match those lines
+     *
+     * If we've got a match auto match next "linesAfterMatch" lines
+     *
+     * @param filePrefix files prefix for the map
+     * @param input input stream from which to match
+     * @throws IOException may throw
+     */
     private void grep(String filePrefix, InputStream input) throws IOException {
         BufferedReader it = new BufferedReader(new InputStreamReader(input));
         if (!matches.containsKey(filePrefix))
@@ -86,6 +113,10 @@ class GrepCommand extends Command {
         }
     }
 
+    /**
+     * Build a pattern according to flags passed
+     *
+     */
     private void buildPattern(){
         String p = inputs.get(0);
         if (wordsOnly) {
@@ -98,6 +129,12 @@ class GrepCommand extends Command {
         }
     }
 
+    /**
+     * Try to match the line, return bool on that
+     *
+     * @param input input line
+     * @return if matched
+     */
     private boolean match(String input) {
         Matcher m = pattern.matcher(input);
         return m.find();
