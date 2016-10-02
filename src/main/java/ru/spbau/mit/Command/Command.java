@@ -10,12 +10,12 @@ import java.util.List;
  * input output streams for uniform manipulation
  */
 public abstract class Command {
-    final List<Argument> args;
+    final List<String> args;
     private InputStream inStream = System.in;
     private OutputStream outStream = System.out;
     // error stream?
 
-    public Command(final List<Argument> args) {
+    public Command(final List<String> args) {
         this.args = args;
     }
 

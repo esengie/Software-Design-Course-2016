@@ -11,7 +11,7 @@ import java.util.List;
  * in each files and the total
  */
 class WcCommand extends Command {
-    WcCommand(List<Argument> args) {
+    WcCommand(List<String> args) {
         super(args);
     }
 
@@ -28,9 +28,9 @@ class WcCommand extends Command {
         long wordsTotal = 0;
         long bytesTotal = 0;
 
-        for (Argument arg : args) {
+        for (String arg : args) {
 
-            File file = new File(arg.getContents());
+            File file = new File(arg);
             long lines = 0;
             long words = 0;
             long bytesL = file.length();
@@ -41,7 +41,7 @@ class WcCommand extends Command {
                 lines++;
                 words += temp.split("\\s").length;
             }
-            writeToOutput(lines, words, bytesL, arg.getContents());
+            writeToOutput(lines, words, bytesL, arg);
 
             reader.close();
 

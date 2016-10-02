@@ -4,11 +4,11 @@ import ru.spbau.mit.Exceptions.CommandCreationError;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 /**
  * Command factory -- use this to build your shell commands from this package
@@ -35,7 +35,7 @@ public class CommandFactory {
      * @return Command interface implementor
      */
     public static Command createCommand(String commandName, String... commandArguments) {
-        List<Argument> args = Arrays.stream(commandArguments).map(ArgumentImpl::new).collect(Collectors.toList());
+        List<String> args = new ArrayList<>(Arrays.asList(commandArguments));
 
         Class<? extends Command> commandClass = COMMANDS.getOrDefault(commandName, EXTERNAL_COMMAND_CLASS);
         try {
@@ -44,7 +44,7 @@ public class CommandFactory {
                 return constructor.newInstance(args);
             }
 
-            args.add(0, new ArgumentImpl(commandName));
+            args.add(0, commandName);
             return constructor.newInstance(args);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             throw new CommandCreationError(commandName, e);

@@ -8,7 +8,7 @@ import java.util.List;
  * System exit - just exits
  */
 class ExitCommand extends Command {
-    ExitCommand(List<Argument> args) {
+    ExitCommand(List<String> args) {
         super(args);
     }
 

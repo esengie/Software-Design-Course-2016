@@ -2,13 +2,12 @@ package ru.spbau.mit.Command;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * External command - uses ProcessBuilder to create a process
  */
 class ExternalCommand extends Command {
-    ExternalCommand(List<Argument> args) {
+    ExternalCommand(List<String> args) {
         super(args);
     }
 
@@ -20,8 +19,7 @@ class ExternalCommand extends Command {
      */
     @Override
     public void run() throws IOException {
-        ProcessBuilder pb = new ProcessBuilder(
-                args.stream().map(Argument::getContents).collect(Collectors.toList()));
+        ProcessBuilder pb = new ProcessBuilder(args);
         Process p = pb.start();
 
         int c;

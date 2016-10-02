@@ -1,7 +1,6 @@
 package ru.spbau.mit.Piping;
 
 
-import ru.spbau.mit.Command.Argument;
 import ru.spbau.mit.Command.Command;
 
 import java.io.IOException;
@@ -20,7 +19,7 @@ public class Pipe {
         private Command inCommand;
         private Command outCommand;
 
-        PipedCommand(List<Argument> args) {
+        PipedCommand(List<String> args) {
             super(args);
         }
 
