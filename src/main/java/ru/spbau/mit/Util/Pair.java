@@ -2,6 +2,7 @@ package ru.spbau.mit.Util;
 
 /**
  * A pair class
+ *
  * @param <F>
  * @param <S>
  */

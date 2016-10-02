@@ -1,6 +1,8 @@
 package ru.spbau.mit.Command;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -13,23 +15,23 @@ public abstract class Command {
     private OutputStream outStream = System.out;
     // error stream?
 
-    public Command(final List<Argument> args){
+    public Command(final List<Argument> args) {
         this.args = args;
     }
 
-    public void setInputStream(InputStream in){
+    public void setInputStream(InputStream in) {
         inStream = in;
     }
 
-    public void setOutputStream(OutputStream out){
+    public void setOutputStream(OutputStream out) {
         outStream = out;
     }
 
-    public InputStream getInputStream(){
+    public InputStream getInputStream() {
         return inStream;
     }
 
-    public OutputStream getOutputStream(){
+    public OutputStream getOutputStream() {
         return outStream;
     }
 

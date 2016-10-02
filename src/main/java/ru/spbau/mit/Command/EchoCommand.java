@@ -13,7 +13,7 @@ class EchoCommand extends Command {
 
     @Override
     public void run() throws IOException {
-        for (Argument arg : args){
+        for (Argument arg : args) {
             getOutputStream().write((arg.getContents() + " ").getBytes());
         }
         getOutputStream().write("\n".getBytes());

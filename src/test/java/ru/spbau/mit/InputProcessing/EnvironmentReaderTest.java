@@ -3,8 +3,6 @@ package ru.spbau.mit.InputProcessing;
 import org.junit.Test;
 import ru.spbau.mit.Util.Pair;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.Assert.*;

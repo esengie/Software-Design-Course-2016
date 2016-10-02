@@ -19,16 +19,16 @@ public class CommandParser {
      * they're in, substitutes vars in the lines
      *
      * @param input input string from console
-     * @param env env - gets vars added here
+     * @param env   env - gets vars added here
      * @return commands split by pipes
      * @throws VariableUndefinedException if there's no variable in the env
      */
     public static List<String> processInput(String input, ShellEnvironment env) throws VariableUndefinedException {
         List<String> piped = CommandSplitter.splitByPipe(input);
-        for (int i = 0; i < piped.size();){
+        for (int i = 0; i < piped.size(); ) {
             Optional<Pair<String, String>> res =
                     EnvironmentReader.getEnvironmentVariable(piped.get(i));
-            if (!res.isPresent()){
+            if (!res.isPresent()) {
                 piped.set(i,
                         VariableSubstituter.substituteVariables(piped.get(i), env));
                 ++i;
@@ -46,19 +46,19 @@ public class CommandParser {
      * Calls processInput and combines the piped commands into one
      *
      * @param input input string from console
-     * @param env env -- to substitute vars
+     * @param env   env -- to substitute vars
      * @return a Command that is a pipe of all the commands
      * @throws IOException piping error or a variable undefined
      */
     public static Command parse(String input, ShellEnvironment env) throws IOException {
         List<String> pipedCommands = processInput(input, env);
         Deque<Command> commands = new ArrayDeque<>();
-        for (String s : pipedCommands){
+        for (String s : pipedCommands) {
             commands.add(formCommand(s));
         }
 
         // Pipe everything
-        while (commands.size() > 1){
+        while (commands.size() > 1) {
             Command left = commands.pollFirst();
             Command right = commands.pollFirst();
             commands.addFirst(Pipe.connect(left, right));
@@ -76,8 +76,9 @@ public class CommandParser {
      */
     private static Command formCommand(String s) {
         String[] l = s.split("\\s");
-        if (l.length < 2)
+        if (l.length < 2) {
             return CommandFactory.createCommand(s);
+        }
         return CommandFactory.createCommand(l[0], Arrays.copyOfRange(l, 1, l.length));
     }
 }

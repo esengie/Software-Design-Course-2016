@@ -18,10 +18,10 @@ class CatCommand extends Command {
 
     @Override
     public void run() throws IOException {
-        if (args.size() == 0){
+        if (args.size() == 0) {
             ByteStreams.copy(getInputStream(), getOutputStream());
         }
-        for (Argument arg : args){
+        for (Argument arg : args) {
             // Stupid java can't get path get
             File f = new File(arg.getContents()).getAbsoluteFile();
             Files.copy(f.toPath(), getOutputStream());

@@ -6,7 +6,7 @@ package ru.spbau.mit.Command;
 class ArgumentImpl implements Argument {
     private String string;
 
-    ArgumentImpl(String string){
+    ArgumentImpl(String string) {
         this.string = string;
     }
 

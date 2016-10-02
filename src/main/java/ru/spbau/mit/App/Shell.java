@@ -6,18 +6,20 @@ import ru.spbau.mit.InputProcessing.CommandParser;
 import ru.spbau.mit.ShellEnvironment.ShellEnvironment;
 import ru.spbau.mit.ShellEnvironment.ShellEnvironmentImpl;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Objects;
 
 /**
  * Main class - creates environment and runs the shell
- *
  */
 public class Shell {
     private static ShellEnvironment env = new ShellEnvironmentImpl();
 
     /**
      * Environment getter
+     *
      * @return env
      */
     static ShellEnvironment getEnv() {
@@ -32,18 +34,20 @@ public class Shell {
         while (true) {
             try {
                 final String userInput = consoleReader.readLine();
-                if (Objects.equals(userInput, ""))
+                if (Objects.equals(userInput, "")) {
                     continue;
-                if (userInput == null)
+                }
+                if (userInput == null) {
                     break;
+                }
                 final Command command = CommandParser.parse(userInput, getEnv());
-                if (command == null)
+                if (command == null) {
                     continue;
+                }
                 command.run();
-            }
-            catch (VariableUndefinedException e){
+            } catch (VariableUndefinedException e) {
                 System.out.println(e.toString());
-            } catch (IOException e){
+            } catch (IOException e) {
                 System.out.println(e);
             }
         }
@@ -52,9 +56,10 @@ public class Shell {
 
     /**
      * Runs the shell
+     *
      * @param args main args
      */
-    public static void main(String [ ] args){
+    public static void main(String[] args) {
         Shell.run();
     }
 }

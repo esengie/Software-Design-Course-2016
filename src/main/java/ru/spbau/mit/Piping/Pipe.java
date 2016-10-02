@@ -48,7 +48,7 @@ public class Pipe {
     /**
      * Connects two commands via a pipe
      *
-     * @param in left command
+     * @param in  left command
      * @param out right command
      * @return piped command
      * @throws IOException working with stream it ma

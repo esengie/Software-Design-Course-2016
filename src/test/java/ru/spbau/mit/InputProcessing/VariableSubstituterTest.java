@@ -4,7 +4,7 @@ import org.junit.Test;
 import ru.spbau.mit.ShellEnvironment.ShellEnvironment;
 import ru.spbau.mit.ShellEnvironment.ShellEnvironmentImpl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class VariableSubstituterTest {
     private static ShellEnvironment env = new ShellEnvironmentImpl();

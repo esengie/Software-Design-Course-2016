@@ -7,6 +7,7 @@ public interface ShellEnvironment {
 
     /**
      * Checks if the variable is defined
+     *
      * @param varName Variable name
      * @return check
      */
@@ -15,6 +16,7 @@ public interface ShellEnvironment {
 
     /**
      * Gets the value of the var
+     *
      * @param varName Variable name
      * @return value
      */
@@ -22,7 +24,8 @@ public interface ShellEnvironment {
 
     /**
      * Adds a  var to environment
-     * @param varName Variable name
+     *
+     * @param varName  Variable name
      * @param varValue Variable value
      */
     void addToEnvironment(String varName, String varValue);

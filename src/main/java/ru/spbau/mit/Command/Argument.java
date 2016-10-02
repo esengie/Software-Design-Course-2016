@@ -7,6 +7,7 @@ public interface Argument {
 
     /**
      * Return arg as string
+     *
      * @return string representation
      */
     String getContents();

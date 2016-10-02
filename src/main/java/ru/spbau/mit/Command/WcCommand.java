@@ -17,7 +17,7 @@ class WcCommand extends Command {
 
     /**
      * Iterates through the args and counts the stats
-     *
+     * <p>
      * Prints the total if there are more than two files specified
      *
      * @throws IOException could
@@ -49,9 +49,9 @@ class WcCommand extends Command {
             wordsTotal += words;
             bytesTotal += bytesL;
         }
-        if (args.size() > 1)
+        if (args.size() > 1) {
             writeToOutput(linesTotal, wordsTotal, bytesTotal, "total");
-
+        }
         flush();
     }
 

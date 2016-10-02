@@ -10,7 +10,7 @@ import ru.spbau.mit.Command.CommandFactory;
 
 import java.io.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PipedCommandTest {
     private ByteArrayOutputStream outContent = new ByteArrayOutputStream();

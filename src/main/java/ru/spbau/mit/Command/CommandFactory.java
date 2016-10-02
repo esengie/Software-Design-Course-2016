@@ -30,7 +30,7 @@ public class CommandFactory {
      * and returns a specified command or an external command if
      * the command name wasn't recognized
      *
-     * @param commandName Command name
+     * @param commandName      Command name
      * @param commandArguments Command args
      * @return Command interface implementor
      */
@@ -40,8 +40,9 @@ public class CommandFactory {
         Class<? extends Command> commandClass = COMMANDS.getOrDefault(commandName, EXTERNAL_COMMAND_CLASS);
         try {
             Constructor<? extends Command> constructor = commandClass.getDeclaredConstructor(List.class);
-            if (!commandClass.equals(EXTERNAL_COMMAND_CLASS))
+            if (!commandClass.equals(EXTERNAL_COMMAND_CLASS)) {
                 return constructor.newInstance(args);
+            }
 
             args.add(0, new ArgumentImpl(commandName));
             return constructor.newInstance(args);

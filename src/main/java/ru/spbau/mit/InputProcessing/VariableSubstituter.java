@@ -4,8 +4,6 @@ import ru.spbau.mit.Exceptions.VariableUndefinedException;
 import ru.spbau.mit.ShellEnvironment.ShellEnvironment;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Substitutes all the vars in the environment into the line
@@ -16,7 +14,7 @@ class VariableSubstituter {
      * Substitutes rather orcishly but does it's job
      *
      * @param stringIn input string
-     * @param env shell env
+     * @param env      shell env
      * @return processed string
      * @throws VariableUndefinedException if the var isn't in the env
      */
@@ -29,8 +27,9 @@ class VariableSubstituter {
             if (!inSingleQuotes && c == '$') {
                 dollarPositions.add(i);
             }
-            if (c == '\'')
+            if (c == '\'') {
                 inSingleQuotes = !inSingleQuotes;
+            }
         }
 
         StringBuilder retVal = new StringBuilder();
@@ -40,14 +39,16 @@ class VariableSubstituter {
         for (Integer right : dollarPositions) {
             retVal.append(stringIn.substring(left, right));
             left = right + 1;
-            while (left < stringIn.length()
-                    && !specialCharacters.contains(stringIn.charAt(left)))
+            while (left < stringIn.length() &&
+                    !specialCharacters.contains(stringIn.charAt(left))) {
                 ++left;
+            }
 
-            String varName = stringIn.substring(right+1, left);
+            String varName = stringIn.substring(right + 1, left);
 
-            if (!env.checkDefined(varName))
+            if (!env.checkDefined(varName)) {
                 throw new VariableUndefinedException(varName);
+            }
             retVal.append(env.getValue(varName));
         }
         retVal.append(stringIn.substring(left));
