@@ -7,12 +7,10 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class PwdCommandTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -38,6 +36,6 @@ public class PwdCommandTest {
         Command pwd = CommandFactory.createCommand("pwd");
         pwd.run();
 
-        assertEquals(path + "\n", outContent.toString());
+        assertThat(outContent.toString(), is(path + "\n"));
     }
 }

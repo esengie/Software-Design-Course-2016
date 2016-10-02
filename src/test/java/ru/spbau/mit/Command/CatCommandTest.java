@@ -1,6 +1,5 @@
 package ru.spbau.mit.Command;
 
-import com.sun.org.apache.xpath.internal.Arg;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -8,12 +7,10 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 
 public class CatCommandTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -50,7 +47,7 @@ public class CatCommandTest {
         Command cat = CommandFactory.createCommand("cat", files);
         cat.run();
 
-        assertEquals("asasdsada   sdasdasd\nMy name is Tom\n", outContent.toString());
+        assertThat(outContent.toString(), is("asasdsada   sdasdasd\nMy name is Tom\n"));
     }
 
 }

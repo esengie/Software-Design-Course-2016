@@ -8,7 +8,8 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class WcCommandTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -45,7 +46,7 @@ public class WcCommandTest {
         Command wc = CommandFactory.createCommand("wc", files);
         wc.run();
 
-        assertEquals("1 2 0 myfile.txt\n2 4 0 notmyfile.txt\n3 6 0 total\n", outContent.toString());
+        assertThat(outContent.toString(), is("1 2 0 myfile.txt\n2 4 0 notmyfile.txt\n3 6 0 total\n"));
     }
 
 }

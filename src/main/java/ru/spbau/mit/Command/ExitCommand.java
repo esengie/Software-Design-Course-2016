@@ -8,10 +8,15 @@ import java.util.List;
  * System exit - just exits
  */
 class ExitCommand extends Command {
-    ExitCommand(List<Argument> a_args) {
-        super(a_args);
+    ExitCommand(List<String> args) {
+        super(args);
     }
 
+    /**
+     * Exits
+     *
+     * @throws IOException could
+     */
     @Override
     public void run() throws IOException {
         System.exit(0);

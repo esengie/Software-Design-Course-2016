@@ -3,15 +3,14 @@ package ru.spbau.mit.Command;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 /**
  * Pwd command
  */
 class PwdCommand extends Command {
-    PwdCommand(List<Argument> a_args) {
-        super(a_args);
+    PwdCommand(List<String> args) {
+        super(args);
     }
 
     /**

@@ -1,7 +1,6 @@
 package ru.spbau.mit.Piping;
 
 
-import ru.spbau.mit.Command.Argument;
 import ru.spbau.mit.Command.Command;
 
 import java.io.IOException;
@@ -14,48 +13,59 @@ import java.util.List;
  * A pipe class - connects two commands together
  */
 public class Pipe {
-
-
+    /**
+     * A decorator class, decorates two commands into one,
+     * by redirecting the output of the first into the input of the second
+     *
+     */
     private static class PipedCommand extends Command {
-        private Command m_inCommand;
-        private Command m_outCommand;
+        private Command inCommand;
+        private Command outCommand;
 
-        PipedCommand(List<Argument> a_args) {
-            super(a_args);
+        PipedCommand(List<String> args) {
+            super(args);
         }
 
-        void setInOutCommand(Command a_left, Command a_right) throws IOException {
-            m_inCommand = a_left;
-            setInputStream(a_left.getInputStream());
+        void setInOutCommand(Command left, Command right) throws IOException {
+            inCommand = left;
+            setInputStream(left.getInputStream());
 
-            m_outCommand = a_right;
-            setOutputStream(a_right.getOutputStream());
+            outCommand = right;
+            setOutputStream(right.getOutputStream());
 
             PipedOutputStream out = new PipedOutputStream();
             PipedInputStream in = new PipedInputStream(out);
 
-            m_inCommand.setOutputStream(out);
-            m_outCommand.setInputStream(in);
+            inCommand.setOutputStream(out);
+            outCommand.setInputStream(in);
         }
 
+        /**
+         * First command runs then the second
+         *
+         * @throws IOException could throw
+         */
         public void run() throws IOException {
-            m_inCommand.run();
-            m_inCommand.getOutputStream().close();
-            m_outCommand.run();
+            inCommand.run();
+            inCommand.getOutputStream().close();
+            outCommand.run();
         }
     }
 
     /**
-     * Connects two commands via a pipe
+     * Connects two commands via a pipe (using Piped streams)
      *
-     * @param a_in left command
-     * @param a_out right command
-     * @return piped command
-     * @throws IOException working with stream it ma
+     * Command one runs, writes to input of the second,
+     * then command two runs
+     *
+     * @param in command on the left of the pipe
+     * @param out command on the right of the pipe
+     * @return piped decorated command
+     * @throws IOException may throw
      */
-    public static Command connect(Command a_in, Command a_out) throws IOException {
+    public static Command connect(Command in, Command out) throws IOException {
         PipedCommand pipe = new PipedCommand(new ArrayList<>());
-        pipe.setInOutCommand(a_in, a_out);
+        pipe.setInOutCommand(in, out);
 
         return pipe;
     }

@@ -10,7 +10,9 @@ import ru.spbau.mit.Command.CommandFactory;
 
 import java.io.*;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 
 public class PipedCommandTest {
     private ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -49,7 +51,7 @@ public class PipedCommandTest {
         Command cat = Pipe.connect(cat1, cat2);
         cat.run();
 
-        assertEquals("asasdsada   sdasdasd\nMy name is Tom\n", outContent.toString());
+        assertThat(outContent.toString(), is("asasdsada   sdasdasd\nMy name is Tom\n"));
     }
 
     @Test
@@ -59,6 +61,6 @@ public class PipedCommandTest {
         Command find = Pipe.connect(cat, grep);
         find.run();
 
-        assertEquals("My name is Tom\n", outContent.toString());
+        assertThat(outContent.toString(), is("My name is Tom\n"));
     }
 }

@@ -6,9 +6,6 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 public class ExternalCommandTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -25,7 +22,7 @@ public class ExternalCommandTest {
 
     @Test
     public void run() throws Exception {
-        Command ping = CommandFactory.createCommand("netstat");
+        Command ping = CommandFactory.createCommand("ifconfig");
         ping.run();
     }
 
