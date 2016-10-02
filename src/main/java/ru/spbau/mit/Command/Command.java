@@ -8,29 +8,29 @@ import java.util.List;
  * input output streams for uniform manipulation
  */
 public abstract class Command {
-    final List<Argument> m_args;
-    private InputStream m_inStream = System.in;
-    private OutputStream m_outStream = System.out;
+    final List<Argument> args;
+    private InputStream inStream = System.in;
+    private OutputStream outStream = System.out;
     // error stream?
 
-    public Command(final List<Argument> a_args){
-        m_args = a_args;
+    public Command(final List<Argument> args){
+        this.args = args;
     }
 
-    public void setInputStream(InputStream a_in){
-        m_inStream = a_in;
+    public void setInputStream(InputStream in){
+        inStream = in;
     }
 
-    public void setOutputStream(OutputStream a_out){
-        m_outStream = a_out;
+    public void setOutputStream(OutputStream out){
+        outStream = out;
     }
 
     public InputStream getInputStream(){
-        return m_inStream;
+        return inStream;
     }
 
     public OutputStream getOutputStream(){
-        return m_outStream;
+        return outStream;
     }
 
 

@@ -23,7 +23,7 @@ class ExternalCommand extends Command {
     @Override
     public void run() throws IOException {
         ProcessBuilder pb = new ProcessBuilder(
-                m_args.stream().map(Argument::getContents).collect(Collectors.toList()));
+                args.stream().map(Argument::getContents).collect(Collectors.toList()));
         Process p = pb.start();
 
         int c;

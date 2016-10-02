@@ -7,23 +7,23 @@ public interface ShellEnvironment {
 
     /**
      * Checks if the variable is defined
-     * @param a_varName Variable name
+     * @param varName Variable name
      * @return check
      */
-    boolean checkDefined(String a_varName);
+    boolean checkDefined(String varName);
 
 
     /**
      * Gets the value of the var
-     * @param a_varName Variable name
+     * @param varName Variable name
      * @return value
      */
-    String getValue(String a_varName);
+    String getValue(String varName);
 
     /**
      * Adds a  var to environment
-     * @param a_varName Variable name
-     * @param a_varValue Variable value
+     * @param varName Variable name
+     * @param varValue Variable value
      */
-    void addToEnvironment(String a_varName, String a_varValue);
+    void addToEnvironment(String varName, String varValue);
 }

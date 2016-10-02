@@ -12,11 +12,11 @@ class EnvironmentReader {
     /**
      * If the line input is in the form var=val returns the pair
      * 
-     * @param a_stringIn input
+     * @param stringIn input
      * @return optional pair of variable and its value
      */
-    static Optional<Pair<String, String>> getEnvironmentVariable(String a_stringIn){
-        List<String> tempList = new ArrayList<>(Arrays.asList(a_stringIn.split("\\s+")));
+    static Optional<Pair<String, String>> getEnvironmentVariable(String stringIn){
+        List<String> tempList = new ArrayList<>(Arrays.asList(stringIn.split("\\s+")));
         tempList.removeAll(Collections.singleton(""));
 
         if (tempList.size() > 1)

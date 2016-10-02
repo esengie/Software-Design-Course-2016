@@ -11,8 +11,8 @@ import java.util.List;
  * in each files and the total
  */
 class WcCommand extends Command {
-    WcCommand(List<Argument> a_args) {
-        super(a_args);
+    WcCommand(List<Argument> args) {
+        super(args);
     }
 
     /**
@@ -20,7 +20,7 @@ class WcCommand extends Command {
      *
      * Prints the total if there are more than two files specified
      *
-     * @throws IOException
+     * @throws IOException could
      */
     @Override
     public void run() throws IOException {
@@ -28,7 +28,7 @@ class WcCommand extends Command {
         long wordsTotal = 0;
         long bytesTotal = 0;
 
-        for (Argument arg : m_args) {
+        for (Argument arg : args) {
 
             File file = new File(arg.getContents());
             long lines = 0;
@@ -49,7 +49,7 @@ class WcCommand extends Command {
             wordsTotal += words;
             bytesTotal += bytesL;
         }
-        if (m_args.size() > 1)
+        if (args.size() > 1)
             writeToOutput(linesTotal, wordsTotal, bytesTotal, "total");
 
         flush();

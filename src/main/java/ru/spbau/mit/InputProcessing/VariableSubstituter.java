@@ -15,17 +15,17 @@ class VariableSubstituter {
     /**
      * Substitutes rather orcishly but does it's job
      *
-     * @param a_stringIn input string
-     * @param a_env shell env
+     * @param stringIn input string
+     * @param env shell env
      * @return processed string
      * @throws VariableUndefinedException if the var isn't in the env
      */
-    static String substituteVariables(String a_stringIn, ShellEnvironment a_env) throws VariableUndefinedException {
+    static String substituteVariables(String stringIn, ShellEnvironment env) throws VariableUndefinedException {
 
         List<Integer> dollarPositions = new ArrayList<>();
         boolean inSingleQuotes = false;
-        for (int i = 0; i < a_stringIn.length() - 1; ++i) {
-            char c = a_stringIn.charAt(i);
+        for (int i = 0; i < stringIn.length() - 1; ++i) {
+            char c = stringIn.charAt(i);
             if (!inSingleQuotes && c == '$') {
                 dollarPositions.add(i);
             }
@@ -38,19 +38,19 @@ class VariableSubstituter {
         Set<Character> specialCharacters = new TreeSet<>(Arrays.asList(' ', '"', '/', '='));
 
         for (Integer right : dollarPositions) {
-            retVal.append(a_stringIn.substring(left, right));
+            retVal.append(stringIn.substring(left, right));
             left = right + 1;
-            while (left < a_stringIn.length()
-                    && !specialCharacters.contains(a_stringIn.charAt(left)))
+            while (left < stringIn.length()
+                    && !specialCharacters.contains(stringIn.charAt(left)))
                 ++left;
 
-            String varName = a_stringIn.substring(right+1, left);
+            String varName = stringIn.substring(right+1, left);
 
-            if (!a_env.checkDefined(varName))
+            if (!env.checkDefined(varName))
                 throw new VariableUndefinedException(varName);
-            retVal.append(a_env.getValue(varName));
+            retVal.append(env.getValue(varName));
         }
-        retVal.append(a_stringIn.substring(left));
+        retVal.append(stringIn.substring(left));
 
         return retVal.toString();
     }

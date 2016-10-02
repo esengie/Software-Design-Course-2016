@@ -4,14 +4,14 @@ package ru.spbau.mit.Command;
  * Basic implementation of command argument interface
  */
 class ArgumentImpl implements Argument {
-    private String m_string;
+    private String string;
 
-    ArgumentImpl(String a_string){
-        m_string = a_string;
+    ArgumentImpl(String string){
+        this.string = string;
     }
 
     @Override
     public String getContents() {
-        return m_string;
+        return string;
     }
 }

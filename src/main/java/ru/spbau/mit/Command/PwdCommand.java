@@ -10,8 +10,8 @@ import java.util.List;
  * Pwd command
  */
 class PwdCommand extends Command {
-    PwdCommand(List<Argument> a_args) {
-        super(a_args);
+    PwdCommand(List<Argument> args) {
+        super(args);
     }
 
     /**

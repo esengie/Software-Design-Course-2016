@@ -14,14 +14,14 @@ import java.util.Objects;
  *
  */
 public class Shell {
-    private static ShellEnvironment m_env = new ShellEnvironmentImpl();
+    private static ShellEnvironment env = new ShellEnvironmentImpl();
 
     /**
      * Environment getter
      * @return env
      */
-    public static ShellEnvironment getEnv() {
-        return m_env;
+    static ShellEnvironment getEnv() {
+        return env;
     }
 
     /**

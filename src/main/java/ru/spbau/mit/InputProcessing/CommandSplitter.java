@@ -12,19 +12,19 @@ class CommandSplitter {
     /**
      * Splits a line on pipe symbols
      * Can't just split on '|' because it can be inside the brackets
-     * @param a_stringIn input
+     * @param stringIn input
      * @return list of split strings
      */
-    static List<String> splitByPipe(String a_stringIn){
+    static List<String> splitByPipe(String stringIn){
         List<String> retVal = new ArrayList<>();
 
         boolean inSingleQuotes = false;
         boolean inDoubleQuotes = false;
         int left = 0;
-        for (int right = 0; right < a_stringIn.length(); ++right){
-            char c = a_stringIn.charAt(right);
+        for (int right = 0; right < stringIn.length(); ++right){
+            char c = stringIn.charAt(right);
             if (!inSingleQuotes && !inDoubleQuotes && c == '|'){
-                retVal.add(a_stringIn.substring(left, right));
+                retVal.add(stringIn.substring(left, right));
                 left = right + 1;
             }
             if (c == '\'')
@@ -32,7 +32,7 @@ class CommandSplitter {
             if (c == '\"')
                 inDoubleQuotes = !inDoubleQuotes;
         }
-        retVal.add(a_stringIn.substring(left));
+        retVal.add(stringIn.substring(left));
 
         for (int i = 0; i < retVal.size(); ++i){
             retVal.set(i, retVal.get(i).trim());

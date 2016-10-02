@@ -7,13 +7,13 @@ import java.util.List;
  * Echo - outputs its own args to outputstream
  */
 class EchoCommand extends Command {
-    EchoCommand(List<Argument> a_args) {
-        super(a_args);
+    EchoCommand(List<Argument> args) {
+        super(args);
     }
 
     @Override
     public void run() throws IOException {
-        for (Argument arg : m_args){
+        for (Argument arg : args){
             getOutputStream().write((arg.getContents() + " ").getBytes());
         }
         getOutputStream().write("\n".getBytes());

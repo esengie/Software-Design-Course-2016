@@ -9,8 +9,8 @@ public class Pair<F, S> {
     public F first;
     public S second;
 
-    public Pair(F a_first, S a_second) {
-        first = a_first;
-        second = a_second;
+    public Pair(F first, S second) {
+        this.first = first;
+        this.second = second;
     }
 }

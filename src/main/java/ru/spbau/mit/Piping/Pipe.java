@@ -17,45 +17,45 @@ public class Pipe {
 
 
     private static class PipedCommand extends Command {
-        private Command m_inCommand;
-        private Command m_outCommand;
+        private Command inCommand;
+        private Command outCommand;
 
-        PipedCommand(List<Argument> a_args) {
-            super(a_args);
+        PipedCommand(List<Argument> args) {
+            super(args);
         }
 
-        void setInOutCommand(Command a_left, Command a_right) throws IOException {
-            m_inCommand = a_left;
-            setInputStream(a_left.getInputStream());
+        void setInOutCommand(Command left, Command right) throws IOException {
+            inCommand = left;
+            setInputStream(left.getInputStream());
 
-            m_outCommand = a_right;
-            setOutputStream(a_right.getOutputStream());
+            outCommand = right;
+            setOutputStream(right.getOutputStream());
 
             PipedOutputStream out = new PipedOutputStream();
             PipedInputStream in = new PipedInputStream(out);
 
-            m_inCommand.setOutputStream(out);
-            m_outCommand.setInputStream(in);
+            inCommand.setOutputStream(out);
+            outCommand.setInputStream(in);
         }
 
         public void run() throws IOException {
-            m_inCommand.run();
-            m_inCommand.getOutputStream().close();
-            m_outCommand.run();
+            inCommand.run();
+            inCommand.getOutputStream().close();
+            outCommand.run();
         }
     }
 
     /**
      * Connects two commands via a pipe
      *
-     * @param a_in left command
-     * @param a_out right command
+     * @param in left command
+     * @param out right command
      * @return piped command
      * @throws IOException working with stream it ma
      */
-    public static Command connect(Command a_in, Command a_out) throws IOException {
+    public static Command connect(Command in, Command out) throws IOException {
         PipedCommand pipe = new PipedCommand(new ArrayList<>());
-        pipe.setInOutCommand(a_in, a_out);
+        pipe.setInOutCommand(in, out);
 
         return pipe;
     }

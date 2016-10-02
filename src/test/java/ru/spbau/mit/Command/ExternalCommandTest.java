@@ -25,7 +25,7 @@ public class ExternalCommandTest {
 
     @Test
     public void run() throws Exception {
-        Command ping = CommandFactory.createCommand("netstat");
+        Command ping = CommandFactory.createCommand("ifconfig");
         ping.run();
     }
 
