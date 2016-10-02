@@ -17,11 +17,6 @@ import java.util.Objects;
 public class Shell {
     private static ShellEnvironment env = new ShellEnvironmentImpl();
 
-    /**
-     * Environment getter
-     *
-     * @return env
-     */
     static ShellEnvironment getEnv() {
         return env;
     }

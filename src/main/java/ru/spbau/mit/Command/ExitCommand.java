@@ -12,6 +12,11 @@ class ExitCommand extends Command {
         super(args);
     }
 
+    /**
+     * Exits
+     *
+     * @throws IOException could
+     */
     @Override
     public void run() throws IOException {
         System.exit(0);

@@ -7,7 +7,9 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 
 public class EchoCommandTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -30,7 +32,7 @@ public class EchoCommandTest {
         Command echo = CommandFactory.createCommand("echo", files);
         echo.run();
 
-        assertEquals("myfile.txt notmyfile.txt \n", outContent.toString());
+        assertThat(outContent.toString(), is("myfile.txt notmyfile.txt \n"));
     }
 
 }

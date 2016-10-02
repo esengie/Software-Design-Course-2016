@@ -1,6 +1,6 @@
 package ru.spbau.mit.InputProcessing;
 
-import ru.spbau.mit.Util.Pair;
+import ru.spbau.mit.Util.ImmutablePair;
 
 import java.util.*;
 
@@ -15,7 +15,7 @@ class EnvironmentReader {
      * @param stringIn input
      * @return optional pair of variable and its value
      */
-    static Optional<Pair<String, String>> getEnvironmentVariable(String stringIn) {
+    static Optional<ImmutablePair<String, String>> getEnvironmentVariable(String stringIn) {
         List<String> tempList = new ArrayList<>(Arrays.asList(stringIn.split("\\s+")));
         tempList.removeAll(Collections.singleton(""));
 
@@ -29,7 +29,7 @@ class EnvironmentReader {
             return Optional.empty();
         }
 
-        Pair<String, String> retVal = new Pair<>(tempList.get(0), tempList.get(1));
+        ImmutablePair<String, String> retVal = new ImmutablePair<>(tempList.get(0), tempList.get(1));
         return Optional.of(retVal);
     }
 }

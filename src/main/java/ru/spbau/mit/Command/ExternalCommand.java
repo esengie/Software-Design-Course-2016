@@ -12,7 +12,7 @@ class ExternalCommand extends Command {
     }
 
     /**
-     * Reads all piped input to the  processand closes the
+     * Reads all piped input to the process and closes the
      * inputstream of the process and continues till the work is done
      *
      * @throws IOException could

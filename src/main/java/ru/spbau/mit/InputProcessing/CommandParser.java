@@ -5,7 +5,7 @@ import ru.spbau.mit.Command.CommandFactory;
 import ru.spbau.mit.Exceptions.VariableUndefinedException;
 import ru.spbau.mit.Piping.Pipe;
 import ru.spbau.mit.ShellEnvironment.ShellEnvironment;
-import ru.spbau.mit.Util.Pair;
+import ru.spbau.mit.Util.ImmutablePair;
 
 import java.io.IOException;
 import java.util.*;
@@ -23,10 +23,10 @@ public class CommandParser {
      * @return commands split by pipes
      * @throws VariableUndefinedException if there's no variable in the env
      */
-    public static List<String> processInput(String input, ShellEnvironment env) throws VariableUndefinedException {
+    static List<String> processInput(String input, ShellEnvironment env) throws VariableUndefinedException {
         List<String> piped = CommandSplitter.splitByPipe(input);
         for (int i = 0; i < piped.size(); ) {
-            Optional<Pair<String, String>> res =
+            Optional<ImmutablePair<String, String>> res =
                     EnvironmentReader.getEnvironmentVariable(piped.get(i));
             if (!res.isPresent()) {
                 piped.set(i,

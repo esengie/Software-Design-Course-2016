@@ -11,6 +11,11 @@ class EchoCommand extends Command {
         super(args);
     }
 
+    /**
+     * Outputs its own args to outputstream
+     *
+     * @throws IOException could throw
+     */
     @Override
     public void run() throws IOException {
         for (String arg : args) {

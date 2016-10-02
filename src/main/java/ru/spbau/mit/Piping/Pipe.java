@@ -13,8 +13,11 @@ import java.util.List;
  * A pipe class - connects two commands together
  */
 public class Pipe {
-
-
+    /**
+     * A decorator class, decorates two commands into one,
+     * by redirecting the output of the first into the input of the second
+     *
+     */
     private static class PipedCommand extends Command {
         private Command inCommand;
         private Command outCommand;
@@ -37,6 +40,11 @@ public class Pipe {
             outCommand.setInputStream(in);
         }
 
+        /**
+         * First command runs then the second
+         *
+         * @throws IOException could throw
+         */
         public void run() throws IOException {
             inCommand.run();
             inCommand.getOutputStream().close();
@@ -45,12 +53,15 @@ public class Pipe {
     }
 
     /**
-     * Connects two commands via a pipe
+     * Connects two commands via a pipe (using Piped streams)
      *
-     * @param in  left command
-     * @param out right command
-     * @return piped command
-     * @throws IOException working with stream it ma
+     * Command one runs, writes to input of the second,
+     * then command two runs
+     *
+     * @param in command on the left of the pipe
+     * @param out command on the right of the pipe
+     * @return piped decorated command
+     * @throws IOException may throw
      */
     public static Command connect(Command in, Command out) throws IOException {
         PipedCommand pipe = new PipedCommand(new ArrayList<>());

@@ -9,7 +9,8 @@ import org.junit.rules.TemporaryFolder;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class PwdCommandTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -35,6 +36,6 @@ public class PwdCommandTest {
         Command pwd = CommandFactory.createCommand("pwd");
         pwd.run();
 
-        assertEquals(path + "\n", outContent.toString());
+        assertThat(outContent.toString(), is(path + "\n"));
     }
 }

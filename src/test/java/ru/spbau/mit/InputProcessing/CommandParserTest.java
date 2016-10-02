@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 
 public class CommandParserTest {
 
-    ShellEnvironment env;
+    private ShellEnvironment env;
 
     @Before
     public void setup() {
@@ -30,11 +30,6 @@ public class CommandParserTest {
         List<String> test = CommandParser.processInput(input, env);
 
         assertThat(test, is(expected));
-    }
-
-    @Test
-    public void parse() throws Exception {
-
     }
 
 }

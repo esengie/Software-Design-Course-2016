@@ -1,20 +1,22 @@
 package ru.spbau.mit.InputProcessing;
 
 import org.junit.Test;
-import ru.spbau.mit.Util.Pair;
+import ru.spbau.mit.Util.ImmutablePair;
 
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+
 
 public class EnvironmentReaderTest {
     @Test
     public void getEnvironmentVariable() throws Exception {
-        Optional<Pair<String, String>> test =
+        Optional<ImmutablePair<String, String>> test =
                 EnvironmentReader.getEnvironmentVariable(" moomm=23  ");
         assertTrue(test.isPresent());
-        assertEquals(test.get().first, "moomm");
-        assertEquals(test.get().second, "23");
+        assertThat(test.get().first, is("moomm"));
+        assertThat(test.get().second, is("23"));
 
         test = EnvironmentReader.getEnvironmentVariable(" echo \"moomm=23\"");
         assertFalse(test.isPresent());

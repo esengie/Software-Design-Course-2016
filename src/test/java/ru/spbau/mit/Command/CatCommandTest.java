@@ -8,7 +8,9 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 
 public class CatCommandTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -45,7 +47,7 @@ public class CatCommandTest {
         Command cat = CommandFactory.createCommand("cat", files);
         cat.run();
 
-        assertEquals("asasdsada   sdasdasd\nMy name is Tom\n", outContent.toString());
+        assertThat(outContent.toString(), is("asasdsada   sdasdasd\nMy name is Tom\n"));
     }
 
 }

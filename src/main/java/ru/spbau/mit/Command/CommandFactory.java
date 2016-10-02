@@ -1,6 +1,6 @@
 package ru.spbau.mit.Command;
 
-import ru.spbau.mit.Exceptions.CommandCreationError;
+import ru.spbau.mit.Exceptions.CommandCreationRuntimeException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -47,7 +47,7 @@ public class CommandFactory {
             args.add(0, commandName);
             return constructor.newInstance(args);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            throw new CommandCreationError(commandName, e);
+            throw new CommandCreationRuntimeException(commandName, e);
         }
     }
 }

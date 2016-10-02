@@ -16,6 +16,12 @@ class CatCommand extends Command {
         super(args);
     }
 
+    /**
+     * If no args are passed gets the input stream to output stream
+     * otherwise copies files to outputstream
+     *
+     * @throws IOException could throw
+     */
     @Override
     public void run() throws IOException {
         if (args.size() == 0) {

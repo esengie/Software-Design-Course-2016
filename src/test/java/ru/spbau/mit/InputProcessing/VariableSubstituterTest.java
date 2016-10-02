@@ -4,7 +4,8 @@ import org.junit.Test;
 import ru.spbau.mit.ShellEnvironment.ShellEnvironment;
 import ru.spbau.mit.ShellEnvironment.ShellEnvironmentImpl;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class VariableSubstituterTest {
     private static ShellEnvironment env = new ShellEnvironmentImpl();
@@ -17,7 +18,7 @@ public class VariableSubstituterTest {
     @Test
     public void substituteVariables() throws Exception {
         String test = VariableSubstituter.substituteVariables("$lol \"$dol\" '$lol' $dol", env);
-        assertEquals(test, "rol \"bol\" '$lol' bol");
+        assertThat(test, is("rol \"bol\" '$lol' bol"));
     }
 
 }

@@ -10,27 +10,49 @@ import java.util.List;
  * input output streams for uniform manipulation
  */
 public abstract class Command {
-    final List<String> args;
+    protected final List<String> args;
     private InputStream inStream = System.in;
     private OutputStream outStream = System.out;
     // error stream?
 
+
+    /**
+     * Construct a command
+     *
+     * @param args arguments
+     */
     public Command(final List<String> args) {
         this.args = args;
     }
 
+    /**
+     * Setter of the input
+     *
+     * @param in input
+     */
     public void setInputStream(InputStream in) {
         inStream = in;
     }
 
+    /**
+     * Setter of the output
+     *
+     * @param out output
+     */
     public void setOutputStream(OutputStream out) {
         outStream = out;
     }
 
+    /**
+     * Getter of the input
+     */
     public InputStream getInputStream() {
         return inStream;
     }
 
+    /**
+     * Getter of the output
+     */
     public OutputStream getOutputStream() {
         return outStream;
     }
@@ -45,7 +67,12 @@ public abstract class Command {
         throw new UnsupportedOperationException("method not implemented");
     }
 
-    protected void flush() throws IOException {
+    /**
+     * Flushes the output stream
+     *
+     * @throws IOException may throw
+     */
+    public void flush() throws IOException {
         getOutputStream().flush();
     }
 }
