@@ -114,20 +114,16 @@ public class GrepCommandTest {
     public void runAn() throws Exception {
         files.add(0, "catch");
         files.add(1, "-A");
-        files.add(2, "12");
+        files.add(2, "2");
         Command cat = CommandFactory.createCommand("grep", files.toArray(new String[0]));
         cat.run();
-        assertThat(outContent.toString(), is(
+        assertEquals(outContent.toString(),
                 "myfile.txt:     } catch (URISyntaxException e1) {\n" +
                         "myfile.txt:         // TODO Auto-generated catch block\n" +
                         "myfile.txt:         e1.printStackTrace();\n" +
-                        "myfile.txt:     }\n" +
-                        "myfile.txt:     try {\n" +
-                        "myfile.txt:         FileInputStream input = new FileInputStream(is);\n" +
                         "myfile.txt:     } catch (FileNotFoundException e1) {\n" +
                         "myfile.txt:         // TODO Auto-generated catch block\n" +
-                        "myfile.txt:         e1.printStackTrace();\n" +
-                        "myfile.txt:     }\n"));
+                        "myfile.txt:         e1.printStackTrace();\n");
     }
 
     @Test

@@ -48,7 +48,7 @@ class GrepCommand extends Command {
      * grep function forms a map of matches which get printed out
      * by print function
      *
-     * @throws IOException could throw
+     * @throws IOException could throw if file doesn't exist or too few args are supplied
      */
     @Override
     public void run() throws IOException {
@@ -92,23 +92,26 @@ class GrepCommand extends Command {
      *
      * @param filePrefix files prefix for the map
      * @param input input stream from which to match
-     * @throws IOException may throw
+     * @throws IOException may throw if the stream provided is in an incorrect state
      */
     private void grep(String filePrefix, InputStream input) throws IOException {
         BufferedReader it = new BufferedReader(new InputStreamReader(input));
-        if (!matches.containsKey(filePrefix))
+        if (!matches.containsKey(filePrefix)) {
             matches.put(filePrefix, new ArrayList<>());
+        }
         List<String> res = matches.get(filePrefix);
 
         String line;
         int linesThatGetAFreePass = 0;
         while ((line = it.readLine()) != null) {
-            if ((linesThatGetAFreePass > 0) || match(line)) {
-                linesThatGetAFreePass = linesAfterMatch;
+            if (match(line)) {
+                linesThatGetAFreePass = linesAfterMatch - 1;
                 res.add(line);
-            }
-            if (!match(line)){
-                linesThatGetAFreePass = Math.max(linesThatGetAFreePass - 1, 0);
+            } else {
+                if (linesThatGetAFreePass > 0){
+                    res.add(line);
+                    --linesThatGetAFreePass;
+                }
             }
         }
     }
