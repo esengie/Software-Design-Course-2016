@@ -23,6 +23,7 @@ public class CommandFactory {
         COMMANDS.put("pwd", PwdCommand.class);
         COMMANDS.put("wc", WcCommand.class);
         COMMANDS.put("echo", EchoCommand.class);
+        COMMANDS.put("grep", GrepCommand.class);
     }
 
     /**

@@ -30,7 +30,7 @@ public class CatCommandTest {
 
     @Test
     public void run() throws Exception {
-        String[] files = {"myfile.txt", "notmyfile.txt"};
+        final String[] files = {"myfile.txt", "notmyfile.txt"};
         final File file1 = folder.newFile(files[0]);
         final File file2 = folder.newFile(files[1]);
 
