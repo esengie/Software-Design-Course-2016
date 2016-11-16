@@ -52,7 +52,7 @@
 //                                dir = new File(cmdArg[2]);
 //                            }
 //                            File f = new File(cmdArg[1]);
-//                            File to = new File(dir, f.getName());
+//                            File to = new File(dir, f.getNameTo());
 //                            if (to.createNewFile()) {
 //                                client.executeGet(cmdArg[1], new FileOutputStream(to));
 //                            } else {

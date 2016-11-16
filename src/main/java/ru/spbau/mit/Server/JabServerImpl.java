@@ -1,9 +1,11 @@
 package ru.spbau.mit.Server;
 
 
+import ru.spbau.mit.Chat.Chat;
+import ru.spbau.mit.Chat.ChatImpl;
+import ru.spbau.mit.Chat.NameMessage;
 import ru.spbau.mit.Protocol.JabProtocol;
 import ru.spbau.mit.Protocol.JabProtocolImpl;
-import ru.spbau.mit.Protocol.NameMessage;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -14,7 +16,9 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,8 +29,7 @@ public class JabServerImpl implements JabServer {
     private final JabProtocol protocol = new JabProtocolImpl();
     private volatile boolean isStopped = true;
     private ServerSocket serverSocket;
-    private Map<Integer, Talker> userNames = new ConcurrentHashMap<>();
-    private Map<Integer, BlockingQueue<String>> userMessages = new ConcurrentHashMap<>();
+    private Map<Integer, Chat> chats = new ConcurrentHashMap<>();
 
     private class JabServerInstance implements Runnable {
 
@@ -41,11 +44,10 @@ public class JabServerImpl implements JabServer {
                             int userID = toID((InetSocketAddress) socket.getRemoteSocketAddress());
                             // Only we can modify the map here,
                             // using concurrency aware containers for visibility basically
-                            if (!userMessages.containsKey(userID)){
-                                userMessages.put(userID, new LinkedBlockingQueue<>());
+                            if (!chats.containsKey(userID)) {
+                                chats.put(userID, new ChatImpl(userID, msg.name));
                             }
-                            userNames.put(userID, new Talker(userID, msg.name));
-                            userMessages.get(userID).add(msg.message);
+                            chats.get(userID).updateChat(msg);
                             in.close();
                         } catch (IOException e) {
                             logger.log(Level.FINE, e.getMessage(), e);
@@ -79,12 +81,8 @@ public class JabServerImpl implements JabServer {
     }
 
     @Override
-    public List<Talker> getUsers() {
-        return new ArrayList<>(userNames.values());
+    public List<Chat> getChats() {
+        return new ArrayList<>(chats.values());
     }
 
-    @Override
-    public List<String> getMessages(Talker user) {
-        return null;
-    }
 }

@@ -1,4 +1,4 @@
-package ru.spbau.mit.Protocol;
+package ru.spbau.mit.Chat;
 
 public class NameMessage {
     public final String name;

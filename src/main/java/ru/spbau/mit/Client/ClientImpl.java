@@ -1,21 +1,26 @@
 package ru.spbau.mit.Client;
 
+import lombok.Getter;
+import lombok.Setter;
 import ru.spbau.mit.Protocol.JabProtocol;
 import ru.spbau.mit.Protocol.JabProtocolImpl;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.List;
 
 public class ClientImpl implements Client {
     private boolean connected = false;
     private Socket clientSocket;
     private DataOutputStream netOut;
-    private DataInputStream netIn;
     private String host;
     private short port;
+    @Getter @Setter private String myName;
 
     private JabProtocol protocol = new JabProtocolImpl();
+
+    public ClientImpl(String name) {
+        myName = name;
+    }
 
     @Override
     public void connect(String hostName, short portNumber) throws IOException {
@@ -29,46 +34,27 @@ public class ClientImpl implements Client {
     private void connect() throws IOException {
         clientSocket = new Socket(host, port);
         netOut = new DataOutputStream(clientSocket.getOutputStream());
-        netIn = new DataInputStream(clientSocket.getInputStream());
     }
+
 
     @Override
     public void disconnect() throws IOException {
         if (!connected)
             return;
         connected = false;
-        netIn.close();
+        disconnectHelper();
+    }
+
+    private void disconnectHelper() throws IOException {
+        netOut.close();
     }
 
     @Override
-    public String executeList(String path) throws IOException {
-        return null;
+    public void sendMessage(String msg) throws IOException {
+        connect();
+        protocol.sendMessage(myName, msg, netOut);
+        disconnectHelper();
     }
 
-    @Override
-    public void executeGet(String path, OutputStream out) throws IOException {
-
-    }
-
-//    @Override
-//    public List<RemoteFile> executeList(String path) throws IOException {
-//        if (!connected)
-//            return null;
-//        connect();
-//        protocol.formListRequest(path, netOut);
-//        List<RemoteFile> res = protocol.readListResponse(netIn);
-//        netIn.close();
-//        return res;
-//    }
-
-//    @Override
-//    public void executeGet(String path, OutputStream out) throws IOException {
-//        if (!connected)
-//            return;
-//        connect();
-//        protocol.formGetRequest(path, netOut);
-//        protocol.readGetResponse(netIn, out);
-//        disconnect();
-//    }
 
 }

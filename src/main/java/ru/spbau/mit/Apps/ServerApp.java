@@ -8,7 +8,7 @@
 //import java.util.logging.Logger;
 //
 //public class ServerApp {
-//    private static final Logger logger = Logger.getLogger(ServerApp.class.getName());
+//    private static final Logger logger = Logger.getLogger(ServerApp.class.getNameTo());
 //
 //    public static void main(String[] args2) {
 //        try {

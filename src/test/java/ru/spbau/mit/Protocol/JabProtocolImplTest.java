@@ -1,24 +1,18 @@
 package ru.spbau.mit.Protocol;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import ru.spbau.mit.Chat.NameMessage;
 
 import java.io.*;
-import java.net.Socket;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 
 public class JabProtocolImplTest {
 
     private ByteArrayOutputStream outContent;
     private DataInputStream inContent;
-    private Socket sock;
     private final JabProtocol prot = new JabProtocolImpl();
 
     @Before

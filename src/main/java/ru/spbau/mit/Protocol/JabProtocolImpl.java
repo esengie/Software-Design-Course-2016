@@ -1,10 +1,8 @@
 package ru.spbau.mit.Protocol;
 
+import ru.spbau.mit.Chat.NameMessage;
+
 import java.io.*;
-import java.nio.file.Files;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 public class JabProtocolImpl implements JabProtocol {
     @Override
