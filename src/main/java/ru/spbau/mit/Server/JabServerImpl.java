@@ -1,10 +1,8 @@
 package ru.spbau.mit.Server;
 
 
-import ru.spbau.mit.Chat.Chat;
-import ru.spbau.mit.Chat.ChatImpl;
 import ru.spbau.mit.Chat.ChatRepo;
-import ru.spbau.mit.Chat.NameMessage;
+import ru.spbau.mit.Chat.JabMessage;
 import ru.spbau.mit.Protocol.JabProtocol;
 import ru.spbau.mit.Protocol.JabProtocolImpl;
 
@@ -14,11 +12,6 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Observable;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -46,8 +39,9 @@ public class JabServerImpl implements JabServer {
                     executor.execute(() -> {
                         try {
                             DataInputStream in = new DataInputStream(socket.getInputStream());
-                            NameMessage msg = protocol.readMessage(in);
-                            repo.updateChat((InetSocketAddress) socket.getRemoteSocketAddress(), msg);
+                            JabMessage msg = protocol.readMessage(in);
+                            repo.updateChat(new InetSocketAddress(socket.getInetAddress(),
+                                    msg.serverPort), msg);
                             in.close();
                         } catch (IOException e) {
                             logger.log(Level.FINE, e.getMessage(), e);

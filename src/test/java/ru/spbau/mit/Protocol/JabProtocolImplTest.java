@@ -2,7 +2,7 @@ package ru.spbau.mit.Protocol;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.spbau.mit.Chat.NameMessage;
+import ru.spbau.mit.Chat.JabMessage;
 
 import java.io.*;
 
@@ -22,7 +22,7 @@ public class JabProtocolImplTest {
 
     @Test
     public void sendMsg() throws Exception {
-        prot.sendMessage("Anon", "asd", new DataOutputStream(outContent));
+        prot.sendMessage("Anon", "asd", (short)1231, new DataOutputStream(outContent));
 
         inContent = new DataInputStream(new ByteArrayInputStream(outContent.toByteArray()));
         assertEquals("Anon", inContent.readUTF());
@@ -34,10 +34,11 @@ public class JabProtocolImplTest {
         DataOutputStream b = new DataOutputStream(outContent);
         b.writeUTF("Anon");
         b.writeUTF("asd");
+        b.writeShort((short) 123);
 
         inContent = new DataInputStream(new ByteArrayInputStream(outContent.toByteArray()));
 
-        NameMessage msg = prot.readMessage(inContent);
+        JabMessage msg = prot.readMessage(inContent);
 
         assertEquals("Anon", msg.name);
         assertEquals("asd", msg.message);

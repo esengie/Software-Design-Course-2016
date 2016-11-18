@@ -8,12 +8,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ChatRepo extends Observable {
     private Map<Integer, Chat> chats = new ConcurrentHashMap<>();
 
-    public void updateChat(InetSocketAddress addr, NameMessage msg){
+    public void updateChat(InetSocketAddress addr, JabMessage msg){
         int userID = toID(addr);
+
         // Only we can modify the map here,
         // using concurrency aware containers for visibility basically
         if (!chats.containsKey(userID)) {
-            Chat changed = new ChatImpl(userID, msg.name);
+            Chat changed = new ChatImpl(addr, msg.name);
             chats.put(userID, changed);
             // For notifying of new chats
             setChanged();

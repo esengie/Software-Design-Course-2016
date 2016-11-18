@@ -1,20 +1,22 @@
 package ru.spbau.mit.Protocol;
 
-import ru.spbau.mit.Chat.NameMessage;
+import ru.spbau.mit.Chat.JabMessage;
 
 import java.io.*;
-import java.util.Calendar;
 
 public class JabProtocolImpl implements JabProtocol {
     @Override
-    public NameMessage sendMessage(String name, String msg, DataOutputStream output) throws IOException {
+    public JabMessage sendMessage(String name, String msg, short serverPort, DataOutputStream output) throws IOException {
         output.writeUTF(name);
         output.writeUTF(msg);
-        return new NameMessage(name, msg, TimeJab.getNow());
+        output.writeShort(serverPort);
+        return new JabMessage("", msg, TimeJab.getNow(), serverPort);
     }
 
     @Override
-    public NameMessage readMessage(DataInputStream input) throws IOException {
-        return new NameMessage(input.readUTF(), input.readUTF(), TimeJab.getNow());
+    public JabMessage readMessage(DataInputStream input) throws IOException {
+        JabMessage ret = new JabMessage(input.readUTF(), input.readUTF(),
+                TimeJab.getNow(), input.readShort());
+        return ret;
     }
 }

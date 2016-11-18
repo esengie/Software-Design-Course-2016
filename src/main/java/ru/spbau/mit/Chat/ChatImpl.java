@@ -1,8 +1,8 @@
 package ru.spbau.mit.Chat;
 
 import lombok.Getter;
-import ru.spbau.mit.Protocol.TimeJab;
 
+import java.net.InetSocketAddress;
 import java.util.*;
 
 /**
@@ -11,24 +11,17 @@ import java.util.*;
 public class ChatImpl extends Observable implements Chat {
 
     @Getter private String friendName;
-    @Getter private final int id;
+    @Getter private final InetSocketAddress remote;
 
-    private Set<NameMessage> history = new TreeSet<>();
+    private Set<JabMessage> history = new TreeSet<>();
 
-    public ChatImpl(int id, String friendName){
-        this.id = id;
+    public ChatImpl(InetSocketAddress remote, String friendName){
+        this.remote = remote;
         this.friendName = friendName;
     }
 
     @Override
-    public synchronized void addMessage(String name, String message){
-        history.add(new NameMessage(name, message, TimeJab.getNow()));
-        setChanged();
-        notifyObservers();
-    }
-
-    @Override
-    public synchronized void updateChat(NameMessage message) {
+    public synchronized void updateChat(JabMessage message) {
         history.add(message);
         friendName = message.name;
         setChanged();
