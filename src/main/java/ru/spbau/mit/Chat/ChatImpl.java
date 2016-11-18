@@ -1,39 +1,44 @@
 package ru.spbau.mit.Chat;
 
 import lombok.Getter;
-import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Map;
+import java.util.Observable;
+import java.util.TreeMap;
 
 /**
  * Gets updated by server, notifies the GUI
  */
-public class ChatImpl implements Chat {
+public class ChatImpl extends Observable implements Chat {
 
-    @Getter private String nameTo;
+    @Getter private String friend;
 
-    private List<NameMessage> history = new ArrayList<>();
+    private Map<Long, NameMessage> history = new TreeMap<>();
 
     public final int id;
 
-    public ChatImpl(int id, String nameTo){
+    public ChatImpl(int id, String friend){
         this.id = id;
-        this.nameTo = nameTo;
+        this.friend = friend;
     }
 
-//    void subscribe(){
-//        notify()
-//    }
+    private static long getNow(){
+        return Calendar.getInstance().getTimeInMillis();
+    }
 
     @Override
     public synchronized void addMessage(String name, String message) {
-        history.add(new NameMessage(name, message));
+        history.put(getNow(), new NameMessage(name, message));
+        setChanged();
+        notifyObservers();
     }
 
     @Override
     public synchronized void updateChat(NameMessage message) {
-        history.add(message);
-        nameTo = message.name;
+        history.put(getNow(), message);
+        friend = message.name;
+        setChanged();
+        notifyObservers();
     }
 }

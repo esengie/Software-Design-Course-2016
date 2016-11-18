@@ -8,7 +8,7 @@ import ru.spbau.mit.Protocol.JabProtocolImpl;
 import java.io.*;
 import java.net.Socket;
 
-public class ClientImpl implements Client {
+public class JabClientImpl implements JabClient {
     private boolean connected = false;
     private Socket clientSocket;
     private DataOutputStream netOut;
@@ -18,7 +18,7 @@ public class ClientImpl implements Client {
 
     private JabProtocol protocol = new JabProtocolImpl();
 
-    public ClientImpl(String name) {
+    public JabClientImpl(String name) {
         myName = name;
     }
 

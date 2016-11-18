@@ -16,13 +16,14 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class JabServerImpl implements JabServer {
+public class JabServerImpl extends Observable implements JabServer {
     private static final Logger logger = Logger.getLogger(JabServer.class.getName());
 
     private final ExecutorService executor = Executors.newFixedThreadPool(10);
@@ -45,7 +46,11 @@ public class JabServerImpl implements JabServer {
                             // Only we can modify the map here,
                             // using concurrency aware containers for visibility basically
                             if (!chats.containsKey(userID)) {
-                                chats.put(userID, new ChatImpl(userID, msg.name));
+                                Chat changed = new ChatImpl(userID, msg.name);
+                                chats.put(userID, changed);
+                                // For notifying of new chats
+                                setChanged();
+                                notifyObservers(changed);
                             }
                             chats.get(userID).updateChat(msg);
                             in.close();
@@ -80,7 +85,6 @@ public class JabServerImpl implements JabServer {
         executor.shutdownNow();
     }
 
-    @Override
     public List<Chat> getChats() {
         return new ArrayList<>(chats.values());
     }

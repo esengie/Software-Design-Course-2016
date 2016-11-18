@@ -1,20 +1,14 @@
 package ru.spbau.mit.Server;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import ru.spbau.mit.Client.Client;
-import ru.spbau.mit.Client.ClientImpl;
 import ru.spbau.mit.Protocol.JabProtocol;
 import ru.spbau.mit.Protocol.JabProtocolImpl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -38,7 +32,7 @@ public class JabServerImplTest {
 //        server.start(portNumber);
 //
 //        Thread.sleep(200);
-//        Client client = new ClientImpl();
+//        JabClient client = new JabClientImpl();
 //        client.connect("localhost", portNumber);
 //
 //        List<RemoteFile> lst = client.executeList(dir.getAbsolutePath());
