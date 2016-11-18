@@ -32,8 +32,8 @@ public class ClientApp extends Application implements Observer {
 
     private final ChatRepo repo = new ChatRepo();
     private final JabServer server = new JabServerImpl(repo);
-    private final short serverPort = 8081;
-    private final String name = "Alex";
+    private final short myServerPort = 8081;
+    private final String myName = "Alex";
 
     private final TabPane tabPane = new TabPane();
     private final Tab plusTab = new Tab();
@@ -81,7 +81,7 @@ public class ClientApp extends Application implements Observer {
 
     private void setupBackend() throws IOException {
         repo.addObserver(this);
-        server.start(serverPort);
+        server.start(myServerPort);
     }
 
     private Tab createDisconnectedTab() {
@@ -121,10 +121,12 @@ public class ClientApp extends Application implements Observer {
 
         btn.setOnAction(act -> {
             try {
-                JabClient cl = new JabClientImpl(name, serverPort, repo);
-                cl.connect(hostField.getText(), Short.parseShort(portField.getText()));
+                JabClient cl = new JabClientImpl(myName, myServerPort, repo);
+                cl.connect("localhost", myServerPort);
+//                cl.connect(hostField.getText(), Short.parseShort(portField.getText()));
                 synchronized (this) {
-                    cl.sendMessage(name + " is connecting");
+                    cl.sendMessage(myName + " is connecting");
+                    cl.disconnect();
                     tabPane.getTabs().remove(tab);
                 }
             } catch (IOException | NumberFormatException e) {
@@ -141,7 +143,11 @@ public class ClientApp extends Application implements Observer {
     private synchronized Tab createConnectedTab(Chat chat) {
         Tab tab = new Tab();
         tab.setText(chat.getFriendName());
-        TabController tc = new TabController(tab);
+
+        JabClient client = new JabClientImpl(myName, myServerPort, repo);
+        client.connect(chat.getRemote().getHostName(), (short) chat.getRemote().getPort());
+
+        TabController tc = new TabController(tab, client);
 
         chat.addObserver(tc);
         return tab;
@@ -151,7 +157,8 @@ public class ClientApp extends Application implements Observer {
     public void update(Observable observable, Object ob) {
         if (ob == null)
             throw new IllegalStateException("Need to have a chat passed");
-        Chat c = (Chat) ob;
-        Platform.runLater(() -> addTabBeforePlus(createConnectedTab(c)));
+        Chat chat = (Chat) ob;
+
+        Platform.runLater(() -> addTabBeforePlus(createConnectedTab(chat)));
     }
 }

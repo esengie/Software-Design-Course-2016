@@ -7,7 +7,8 @@ import ru.spbau.mit.Chat.JabMessage;
 import ru.spbau.mit.Protocol.JabProtocol;
 import ru.spbau.mit.Protocol.JabProtocolImpl;
 
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -20,7 +21,9 @@ public class JabClientImpl implements JabClient {
     private InetSocketAddress remoteServer;
     private DataOutputStream netOut;
 
-    @Getter @Setter private String myName;
+    @Getter
+    @Setter
+    private String myName;
 
     private JabProtocol protocol = new JabProtocolImpl();
 
@@ -31,7 +34,7 @@ public class JabClientImpl implements JabClient {
     }
 
     @Override
-    public void connect(String hostName, short portNumber) throws IOException {
+    public void connect(String hostName, short portNumber) {
         if (connected)
             return;
         remoteServer = new InetSocketAddress(hostName, portNumber);

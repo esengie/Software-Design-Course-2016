@@ -25,6 +25,6 @@ public class ChatImpl extends Observable implements Chat {
         history.add(message);
         friendName = message.name;
         setChanged();
-        notifyObservers();
+        notifyObservers(message);
     }
 }
