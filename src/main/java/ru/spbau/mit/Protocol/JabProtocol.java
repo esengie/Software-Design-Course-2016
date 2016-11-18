@@ -7,6 +7,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public interface JabProtocol {
-    void sendMessage(String name, String msg, DataOutputStream output) throws IOException;
+    NameMessage sendMessage(String name, String msg, DataOutputStream output) throws IOException;
     NameMessage readMessage(DataInputStream input) throws IOException;
 }

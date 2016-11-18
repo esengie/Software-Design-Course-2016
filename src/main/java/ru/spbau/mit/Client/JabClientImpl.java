@@ -2,24 +2,33 @@ package ru.spbau.mit.Client;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.spbau.mit.Chat.ChatRepo;
+import ru.spbau.mit.Chat.NameMessage;
 import ru.spbau.mit.Protocol.JabProtocol;
 import ru.spbau.mit.Protocol.JabProtocolImpl;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class JabClientImpl implements JabClient {
+    private final ChatRepo repo;
+
     private boolean connected = false;
-    private Socket clientSocket;
-    private DataOutputStream netOut;
+
     private String host;
     private short port;
+
+    private Socket clientSocket;
+    private DataOutputStream netOut;
+
     @Getter @Setter private String myName;
 
     private JabProtocol protocol = new JabProtocolImpl();
 
-    public JabClientImpl(String name) {
+    public JabClientImpl(String name, ChatRepo repo) {
         myName = name;
+        this.repo = repo;
     }
 
     @Override
@@ -36,7 +45,6 @@ public class JabClientImpl implements JabClient {
         netOut = new DataOutputStream(clientSocket.getOutputStream());
     }
 
-
     @Override
     public void disconnect() throws IOException {
         if (!connected)
@@ -50,10 +58,11 @@ public class JabClientImpl implements JabClient {
     }
 
     @Override
-    public void sendMessage(String msg) throws IOException {
+    public void sendMessage(String message) throws IOException {
         connect();
-        protocol.sendMessage(myName, msg, netOut);
+        NameMessage msg = protocol.sendMessage(myName, message, netOut);
         disconnectHelper();
+        repo.updateChat((InetSocketAddress) clientSocket.getRemoteSocketAddress(), msg);
     }
 
 

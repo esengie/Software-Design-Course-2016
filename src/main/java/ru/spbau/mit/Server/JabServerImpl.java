@@ -3,6 +3,7 @@ package ru.spbau.mit.Server;
 
 import ru.spbau.mit.Chat.Chat;
 import ru.spbau.mit.Chat.ChatImpl;
+import ru.spbau.mit.Chat.ChatRepo;
 import ru.spbau.mit.Chat.NameMessage;
 import ru.spbau.mit.Protocol.JabProtocol;
 import ru.spbau.mit.Protocol.JabProtocolImpl;
@@ -23,14 +24,18 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class JabServerImpl extends Observable implements JabServer {
+public class JabServerImpl implements JabServer {
     private static final Logger logger = Logger.getLogger(JabServer.class.getName());
 
     private final ExecutorService executor = Executors.newFixedThreadPool(10);
     private final JabProtocol protocol = new JabProtocolImpl();
     private volatile boolean isStopped = true;
     private ServerSocket serverSocket;
-    private Map<Integer, Chat> chats = new ConcurrentHashMap<>();
+    private final ChatRepo repo;
+
+    public JabServerImpl(ChatRepo repo){
+        this.repo = repo;
+    }
 
     private class JabServerInstance implements Runnable {
 
@@ -42,17 +47,7 @@ public class JabServerImpl extends Observable implements JabServer {
                         try {
                             DataInputStream in = new DataInputStream(socket.getInputStream());
                             NameMessage msg = protocol.readMessage(in);
-                            int userID = toID((InetSocketAddress) socket.getRemoteSocketAddress());
-                            // Only we can modify the map here,
-                            // using concurrency aware containers for visibility basically
-                            if (!chats.containsKey(userID)) {
-                                Chat changed = new ChatImpl(userID, msg.name);
-                                chats.put(userID, changed);
-                                // For notifying of new chats
-                                setChanged();
-                                notifyObservers(changed);
-                            }
-                            chats.get(userID).updateChat(msg);
+                            repo.updateChat((InetSocketAddress) socket.getRemoteSocketAddress(), msg);
                             in.close();
                         } catch (IOException e) {
                             logger.log(Level.FINE, e.getMessage(), e);
@@ -65,10 +60,6 @@ public class JabServerImpl extends Observable implements JabServer {
                 logger.log(Level.WARNING, "Exception caught when trying to handle client", e);
             }
         }
-    }
-
-    private static int toID(InetSocketAddress socketAddress) {
-        return socketAddress.hashCode();
     }
 
     @Override
@@ -84,9 +75,4 @@ public class JabServerImpl extends Observable implements JabServer {
         serverSocket.close();
         executor.shutdownNow();
     }
-
-    public List<Chat> getChats() {
-        return new ArrayList<>(chats.values());
-    }
-
 }
