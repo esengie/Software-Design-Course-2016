@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -22,29 +23,45 @@ import ru.spbau.mit.Server.JabServer;
 import ru.spbau.mit.Server.JabServerImpl;
 
 import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 public class ClientApp extends Application implements Observer {
+    private List<JabClient> clients = new ArrayList<>();
+
     public static void main(String[] args) {
+        if (args != null && args.length > 0){
+            try {
+                myServerPort = Short.parseShort(args[0]);
+            } catch (NumberFormatException e) {
+                myServerPort = 8081;
+            }
+        }
         launch(args);
     }
 
     private final ChatRepo repo = new ChatRepo();
     private final JabServer server = new JabServerImpl(repo);
-    private final short myServerPort = 8081;
-    private final String myName = "Alex";
+    private static short myServerPort = 8081;
+    private String myName = "Alex";
 
     private final TabPane tabPane = new TabPane();
     private final Tab plusTab = new Tab();
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        primaryStage.setTitle("Jabber");
+        primaryStage.setTitle(myName);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.getTabs().add(createDisconnectedTab());
         addPlusTab();
-        primaryStage.setScene(new Scene(tabPane, 600, 400));
+
+        MenuButton menu = new MenuButton("Options");
+        MenuItem m = new MenuItem("Change name");
+        menu.getItems().add(m);
+
+        m.setOnAction(actionEvent -> showChangeNameDialog(primaryStage));
+
+        VBox scene = new VBox(menu, tabPane);
+        primaryStage.setScene(new Scene(scene, 600, 400));
 
         setupBackend();
         primaryStage.show();
@@ -54,6 +71,16 @@ public class ClientApp extends Application implements Observer {
     public void stop() throws Exception {
         server.stop();
         super.stop();
+    }
+
+    private void showChangeNameDialog(Stage primaryStage){
+        TextInputDialog dialog = new TextInputDialog(myName);
+        dialog.setTitle("Name change dialog");
+        dialog.setHeaderText("This will change your name in all dialogs");
+        dialog.setContentText("Please enter your new name:");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(name -> { myName = name; primaryStage.setTitle(myName);
+            clients.forEach(t -> t.setMyName(myName)); });
     }
 
     private void addPlusTab() {
@@ -122,8 +149,7 @@ public class ClientApp extends Application implements Observer {
         btn.setOnAction(act -> {
             try {
                 JabClient cl = new JabClientImpl(myName, myServerPort, repo);
-                cl.connect("localhost", myServerPort);
-//                cl.connect(hostField.getText(), Short.parseShort(portField.getText()));
+                cl.connect(hostField.getText(), Short.parseShort(portField.getText()));
                 synchronized (this) {
                     cl.sendMessage(myName + " is connecting");
                     cl.disconnect();
@@ -142,14 +168,14 @@ public class ClientApp extends Application implements Observer {
 
     private synchronized Tab createConnectedTab(Chat chat) {
         Tab tab = new Tab();
-        tab.setText(chat.getFriendName());
 
         JabClient client = new JabClientImpl(myName, myServerPort, repo);
         client.connect(chat.getRemote().getHostName(), (short) chat.getRemote().getPort());
 
-        TabController tc = new TabController(tab, client);
+        TabController tc = new TabController(tab, client, chat);
 
         chat.addObserver(tc);
+        clients.add(client);
         return tab;
     }
 

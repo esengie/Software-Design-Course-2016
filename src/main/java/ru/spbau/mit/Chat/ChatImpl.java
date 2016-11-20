@@ -23,7 +23,9 @@ public class ChatImpl extends Observable implements Chat {
     @Override
     public synchronized void updateChat(JabMessage message) {
         history.add(message);
-        friendName = message.name;
+        if (!message.name.equals("")) {
+            friendName = message.name;
+        }
         setChanged();
         notifyObservers(message);
     }

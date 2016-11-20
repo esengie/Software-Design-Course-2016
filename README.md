@@ -1,10 +1,8 @@
-./gradlew server
-./gradlew client
+./gradlew build
 
-cd build/libs
-java -Djava.util.logging.config.file="../../src/logging.properties" -jar server.jar 8082
+May specify port at the start (or the default is 8081)
 
-java -Djava.util.logging.config.file="../../src/logging.properties" -jar client.jar -port 8082 -server localhost
-
+cd build/javapackager-app
+java -Djava.util.logging.config.file="../../src/logging.properties" -jar au_java.jar 8083
 
 --

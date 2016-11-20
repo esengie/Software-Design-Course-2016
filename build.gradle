@@ -13,3 +13,9 @@ dependencies {
     // lombok
     compileOnly "org.projectlombok:lombok:1.16.10"
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ru.spbau.mit.Apps.ClientApp'
+    }
+}
