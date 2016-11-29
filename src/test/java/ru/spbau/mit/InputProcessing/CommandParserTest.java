@@ -17,7 +17,7 @@ public class CommandParserTest {
 
     @Before
     public void setup() {
-        env = new ShellEnvironmentImpl();
+        env = ShellEnvironmentImpl.getInstance();
         env.addToEnvironment("rol", "lol");
         env.addToEnvironment("dol", "bol");
     }

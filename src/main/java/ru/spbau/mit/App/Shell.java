@@ -15,7 +15,7 @@ import java.util.Objects;
  * Main class - creates environment and runs the shell
  */
 public class Shell {
-    private static ShellEnvironment env = new ShellEnvironmentImpl();
+    private static ShellEnvironment env = ShellEnvironmentImpl.getInstance();
 
     static ShellEnvironment getEnv() {
         return env;
