@@ -7,6 +7,20 @@ import java.util.Map;
  * A simple implementation of the ShellEnvironment interface using a HashMap
  */
 public class ShellEnvironmentImpl implements ShellEnvironment {
+    private static ShellEnvironment singleton = new ShellEnvironmentImpl();
+
+    private ShellEnvironmentImpl() {
+    }
+
+    /**
+     * Shell env is a singleton by design
+     *
+     * @return an instance of singleton env
+     */
+    public static ShellEnvironment getInstance() {
+        return singleton;
+    }
+
     private Map<String, String> env = new HashMap<>();
 
     public boolean checkDefined(String varName) {

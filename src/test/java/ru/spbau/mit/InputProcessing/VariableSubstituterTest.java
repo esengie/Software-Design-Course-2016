@@ -8,7 +8,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class VariableSubstituterTest {
-    private static ShellEnvironment env = new ShellEnvironmentImpl();
+    private static ShellEnvironment env = ShellEnvironmentImpl.getInstance();
 
     static {
         env.addToEnvironment("lol", "rol");
