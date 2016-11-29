@@ -17,6 +17,12 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Has some threads doing the messaging job, otherwise is pretty simple:
+ * has a volatile boolean serving as a signal to stop
+ *
+ * The workers use the server part of the protocol and log messages received to the ChatRepo
+ */
 public class JabServerImpl implements JabServer {
     private static final Logger logger = Logger.getLogger(JabServer.class.getName());
 

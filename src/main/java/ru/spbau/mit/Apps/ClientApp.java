@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import ru.spbau.mit.AUI.TabController;
+import ru.spbau.mit.UI.TabController;
 import ru.spbau.mit.Chat.Chat;
 import ru.spbau.mit.Chat.ChatRepo;
 import ru.spbau.mit.Client.JabClient;
@@ -25,6 +25,19 @@ import ru.spbau.mit.Server.JabServerImpl;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * A JavaFX app.
+ *
+ * Stores a list of clients to notify them of name changes,
+ * (didn't want to burden the code with observers everywhere).
+ * Because we need our name in the protocol.
+ *
+ * Creates the scene, and call us NamelessGuy. We can connect to our friends and chat
+ *
+ * Stores the server, starts and stops it when launching and closing.
+ *
+ * Has a dialog for name changes. Observes the ChatRepo and creates new tabControllers as needed.
+ */
 public class ClientApp extends Application implements Observer {
     private List<JabClient> clients = new ArrayList<>();
 
@@ -42,7 +55,7 @@ public class ClientApp extends Application implements Observer {
     private final ChatRepo repo = new ChatRepo();
     private final JabServer server = new JabServerImpl(repo);
     private static short myServerPort = 8081;
-    private String myName = "Alex";
+    private String myName = "NamelessGuy";
 
     private final TabPane tabPane = new TabPane();
     private final Tab plusTab = new Tab();

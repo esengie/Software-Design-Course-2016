@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+/**
+ * Implements the protocol, is stateless in a sense that it connects and disconnects every time,
+ * logs every message to the ChatRepo class
+ */
 public class JabClientImpl implements JabClient {
     private final ChatRepo repo;
     private final short serverPort;

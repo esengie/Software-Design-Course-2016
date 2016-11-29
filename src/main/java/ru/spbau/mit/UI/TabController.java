@@ -1,4 +1,4 @@
-package ru.spbau.mit.AUI;
+package ru.spbau.mit.UI;
 
 import javafx.application.Platform;
 import javafx.scene.control.*;
@@ -20,6 +20,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * A class that controls a conversation tab, knows about its' chat and Observes
+ * changes to it, by updating the tab
+ *
+ * UI side is pretty simple: chatbox + history and keeps track of the name changes
+ *
+ * Also knows about the JabClient and sends messages through it. Doesn't(!) know about the server
+ */
 public class TabController implements Observer {
     private static final Logger logger = Logger.getLogger(ClientApp.class.getName());
 
@@ -66,7 +74,7 @@ public class TabController implements Observer {
 
     private static String millisToStr(long millis) {
         return String.format("%02d:%02d:%02d",
-                TimeUnit.MILLISECONDS.toHours(millis),
+                TimeUnit.MILLISECONDS.toHours(millis) % 24,
                 TimeUnit.MILLISECONDS.toMinutes(millis) -
                         TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
                 TimeUnit.MILLISECONDS.toSeconds(millis) -

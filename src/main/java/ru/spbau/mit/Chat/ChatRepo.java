@@ -5,28 +5,33 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * A chat repo class, Observable - to notify of new chats
+ * <p>
+ * Keeps a map of InetSocketAddress to Chat
+ */
 public class ChatRepo extends Observable {
     private Map<Integer, Chat> chats = new ConcurrentHashMap<>();
 
-    public synchronized void updateChat(InetSocketAddress addr, JabMessage msg){
+    /**
+     * Creates a new chat if the need arises and updates the Observers of the repo
+     *
+     * Updates the observers of the chat
+     *
+     * @param addr of the sender
+     * @param msg of the sender
+     */
+    public synchronized void updateChat(InetSocketAddress addr, JabMessage msg) {
         int userID = toID(addr);
 
-        Chat changed = null;
-        synchronized (this) {
-            // Only we can modify the map here,
-            // using concurrency aware containers for visibility basically
-            if (!chats.containsKey(userID)) {
-                changed = new ChatImpl(addr, msg.name);
-                chats.put(userID, changed);
-                // For notifying of new chats
-                setChanged();
-            }
-            chats.get(userID).updateChat(msg);
-        }
-
-        if (changed != null){
+        if (!chats.containsKey(userID)) {
+            Chat changed = new ChatImpl(addr, msg.name);
+            chats.put(userID, changed);
+            setChanged();
             notifyObservers(changed);
         }
+
+        chats.get(userID).updateChat(msg);
     }
 
     private static int toID(InetSocketAddress socketAddress) {
