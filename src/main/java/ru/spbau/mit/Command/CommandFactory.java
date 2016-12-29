@@ -24,6 +24,8 @@ public class CommandFactory {
         COMMANDS.put("wc", WcCommand.class);
         COMMANDS.put("echo", EchoCommand.class);
         COMMANDS.put("grep", GrepCommand.class);
+        COMMANDS.put("ls", LsCommand.class);
+        COMMANDS.put("cd", CdCommand.class);
     }
 
     /**
